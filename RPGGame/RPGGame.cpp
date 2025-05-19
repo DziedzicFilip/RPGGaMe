@@ -1,11 +1,14 @@
-
 #include <iostream>
 #include "NPC.h"
 using namespace std;
+
+// Import assembly functions
 extern "C" int PrintText(const char* text);
 
 int main() {
-	const char* test = "Witaj w grze";
-	PrintText(test);
+    // Welcome message using our assembly function
+    const char* welcome = "Witaj w świecie RPG Game - Las Cieni";
+    PrintText(welcome);
+    
     return 0;
 }
