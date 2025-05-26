@@ -1,80 +1,71 @@
 #pragma once
 #include <string>
-#include <random>
 #include <iostream>
+#include "Equipment.h" // Dodaj ten include
 
-/**
- * @file Character.h
- * 
- * @brief Abstrakcyjna klasa bazowa dla wszystkich postaci w grze.
- * 
- * Ta klasa zawiera podstawowe właściwości i metody wspólne dla wszystkich postaci
- * w grze, takie jak gracz, towarzysz, NPC i przeciwnicy. Zawiera również
- * implementację mechanizmu testów percepcji opartego na instrukcjach z pliku instructions.md.
- * 
- * @author Twój Zespół
- * @date Maj 2025
- */
-class Character
-{
+class Character {
+protected:
+    double HealthPoints;
+    std::string name;
+    int level;
+    double XP;
+    int strength;
+    int intelligence;
+    int dexterity;
+    int luck;
+    int endurance;
+    double mana;
+    Equipment eq; // Dodaj pole ekwipunku
+
 public:
-    /**
-     * @brief Konstruktor z parametrami dla postaci
-     * 
-     * @param name Imię postaci
-     * @param health Punkty życia
-     * @param strength Siła (wpływa na obrażenia fizyczne)
-     * @param intelligence Inteligencja (wpływa na testy percepcji)
-     * @param dexterity Zręczność (wpływa na uniki i testy percepcji)
-     * @param luck Szczęście (wpływa losowo na różne testy)
-     */
-    Character(std::string name, int health, int strength, int intelligence, int dexterity, int luck);
-    virtual ~Character() = default;
-    
-    // Gettery - pobieranie wartości atrybutów
-    std::string getName() const { return name; }
-    int getHealth() const { return health; }
+    Character(const std::string& name, double healthPoints, int level, double XP,
+        int strength, int intelligence, int dexterity, int luck, int endurance, double mana)
+        : name(name), HealthPoints(healthPoints), level(level), XP(XP),
+        strength(strength), intelligence(intelligence), dexterity(dexterity), luck(luck), endurance(endurance), mana(mana) {
+    }
+
+    virtual ~Character() {}
+
+    // Getters
+    double getHealthPoints() const { return HealthPoints; }
+    const std::string& getName() const { return name; }
+    int getLevel() const { return level; }
+    double getXP() const { return XP; }
     int getStrength() const { return strength; }
     int getIntelligence() const { return intelligence; }
     int getDexterity() const { return dexterity; }
     int getLuck() const { return luck; }
-    int getLevel() const { return level; }
-    
-    // Settery - ustawianie wartości atrybutów
-    void setHealth(int newHealth) { health = newHealth > 0 ? newHealth : 0; }
-    void increaseLevel() { level++; }
-    
-    // Metody wirtualne do przesłonięcia przez klasy pochodne
-    virtual void attack(Character& target) = 0;  // Atak na inną postać
-    virtual void defend() = 0;                  // Obrona
-    virtual void useItem(int itemId) = 0;       // Używanie przedmiotu
-    
-    /**
-     * @brief Test percepcji oparty na instrukcjach z instructions.md
-     * 
-     * Test percepcji jest zależny od inteligencji, zręczności i szczęścia.
-     * Różne progi sukcesu są używane w różnych aktach gry:
-     * - 15+ w Akcie 1 (Las Cieni)
-     * - 12+ w Akcie 2 (Wioska Zamarłych)
-     * 
-     * @return int Wynik rzutu percepcji
-     */
-    int perceptionTest();
-    
-    /**
-     * @brief Wyświetla statystyki postaci
-     */
-    void displayStats() const;
-    
-protected:
-    std::string name;        // Imię postaci
-    int health;              // Punkty życia
-    int strength;            // Siła
-    int intelligence;        // Inteligencja
-    int dexterity;           // Zręczność
-    int luck;                // Szczęście
-    int level;               // Poziom postaci (zaczyna od 1)
-    
-    // Generator liczb losowych do rzutów kośćmi
-    std::mt19937 rng;
+    int getEndurance() const { return endurance; }
+    double getMana() const { return mana; }
+    Equipment& getEquipment() { return eq; } // Getter do ekwipunku
+    const Equipment& getEquipment() const { return eq; }
+
+    // Setters
+    void setHealthPoints(double hp) { HealthPoints = hp; }
+    void setName(const std::string& n) { name = n; }
+    void setLevel(int lvl) { level = lvl; }
+    void setXP(double xp) { XP = xp; }
+    void setStrength(int str) { strength = str; }
+    void setIntelligence(int intel) { intelligence = intel; }
+    void setDexterity(int dex) { dexterity = dex; }
+    void setLuck(int l) { luck = l; }
+    void setEndurance(int e) { endurance = e; }
+    void setMana(double m) { mana = m; }
+
+    // Display stats
+    virtual void displayStats() const {
+        std::cout << "Name: " << name << std::endl;
+        std::cout << "Health Points: " << HealthPoints << std::endl;
+        std::cout << "Level: " << level << std::endl;
+        std::cout << "XP: " << XP << std::endl;
+        std::cout << "Strength: " << strength << std::endl;
+        std::cout << "Intelligence: " << intelligence << std::endl;
+        std::cout << "Dexterity: " << dexterity << std::endl;
+        std::cout << "Luck: " << luck << std::endl;
+        std::cout << "Endurance: " << endurance << std::endl;
+        std::cout << "Mana: " << mana << std::endl;
+    }
+
+    // Abstract method
+    virtual bool perceptionTest() const = 0;
 };

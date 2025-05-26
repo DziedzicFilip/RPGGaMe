@@ -16,10 +16,76 @@
     <Filter Include="Source Files\Asembler">
       <UniqueIdentifier>{a4b3cdac-c193-4dc1-9358-63fff2a598c0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Class">
+      <UniqueIdentifier>{326d578a-7187-4008-8a61-d3fc57a14a0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Class\Weapons">
+      <UniqueIdentifier>{62e4c417-a1fa-4397-afb2-59cb0cd27930}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Weapons">
+      <UniqueIdentifier>{fc5dbe72-93f8-4b82-a03c-0dd3f28225c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Characters">
+      <UniqueIdentifier>{dc1303f8-4713-4270-a169-cdb361c15a59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Characters\Playable">
+      <UniqueIdentifier>{cf8ce767-05b9-4bd3-b820-234aa6fe43e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Class\Characters">
+      <UniqueIdentifier>{6619bb1c-e1b5-4e05-a41a-d41be0d2e395}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Class\Characters\Playable">
+      <UniqueIdentifier>{fbf8d43c-287b-4512-b2d2-8c23e1a88762}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Class\Characters\Enemy">
+      <UniqueIdentifier>{1ec85eba-18e1-40b3-9a90-5c0b956bfe6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Class\GameMechanics">
+      <UniqueIdentifier>{a0a64592-6621-481e-9110-52dc70972970}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GameMechanics">
+      <UniqueIdentifier>{072feea3-1a5e-4629-876d-2d266cad826c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Characters\Enemy">
+      <UniqueIdentifier>{1978eb98-f049-4746-8e99-047676ad020c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RPGGame.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>Source Files\Class\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="Bow.cpp">
+      <Filter>Source Files\Class\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="Sword.cpp">
+      <Filter>Source Files\Class\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="MagicStick.cpp">
+      <Filter>Source Files\Class\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="Potion.cpp">
+      <Filter>Source Files\Class\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="Hero.cpp">
+      <Filter>Source Files\Class\Characters\Playable</Filter>
+    </ClCompile>
+    <ClCompile Include="Equipment.cpp">
+      <Filter>Source Files\Class\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="NPC.cpp">
+      <Filter>Source Files\Class\Characters\Playable</Filter>
+    </ClCompile>
+    <ClCompile Include="Character.cpp">
+      <Filter>Source Files\Class\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="RestPoint.cpp">
+      <Filter>Source Files\Class\GameMechanics</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Source Files\Class\Characters\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -29,5 +95,40 @@
     <MASM Include="PrintText.asm">
       <Filter>Source Files\Asembler</Filter>
     </MASM>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Bow.h">
+      <Filter>Header Files\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>Header Files\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="Sword.h">
+      <Filter>Header Files\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="MagicStick.h">
+      <Filter>Header Files\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
+      <Filter>Header Files\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="Equipment.h">
+      <Filter>Header Files\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="Hero.h">
+      <Filter>Header Files\Characters\Playable</Filter>
+    </ClInclude>
+    <ClInclude Include="Potion.h">
+      <Filter>Header Files\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="NPC.h">
+      <Filter>Header Files\Characters\Playable</Filter>
+    </ClInclude>
+    <ClInclude Include="RestPoint.h">
+      <Filter>Header Files\GameMechanics</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Header Files\Characters\Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

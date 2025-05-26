@@ -1,5 +1,5 @@
 #include <iostream>
-#include "NPC.h"
+
 using namespace std;
 
 // Import assembly functions
