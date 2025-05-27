@@ -1,6 +1,5 @@
 #pragma once
 #include <string>
-#include "Character.h"
 
 class Potion {
 public:
@@ -16,6 +15,5 @@ public:
     Type getType() const;
     double getAmount() const;
 
-    // Przywraca HP lub manê postaci
-    void use(Character& character) const;
+    
 };

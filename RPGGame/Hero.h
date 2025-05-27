@@ -16,8 +16,8 @@ public:
     void setEndurance(int value);
 
     // Gettery i settery dla broni w rêku
-    Weapon* getHand() const { return hand; }
-    void setHand(Weapon* weapon) { hand = weapon; }
+    Weapon* getHand() const;
+    void setHand(Weapon* weapon);
 
     // Umiejêtnoœci walki
     void heavyAttack();

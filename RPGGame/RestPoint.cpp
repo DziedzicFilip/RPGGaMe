@@ -1,4 +1,6 @@
 #include "RestPoint.h"
+#include "Hero.h"
+
 #include <iostream>
 
 RestPoint::RestPoint(const std::string& name)

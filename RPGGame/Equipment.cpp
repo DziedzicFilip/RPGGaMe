@@ -40,6 +40,12 @@ void Equipment::showWeaponDetails(int index) const {
         std::cout << "No weapon at index " << index << std::endl;
     }
 }
+Weapon* Equipment::getWeapon(int index) const {
+    if (index >= 0 && index < 2) { // Zak³adam, ¿e masz 2 sloty na broñ
+        return weapons[index];
+    }
+    return nullptr;
+}
 
 // Dodawanie potki
 bool Equipment::addPotion(Potion* potion) {

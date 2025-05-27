@@ -3,8 +3,8 @@
 
 Hero::Hero(const std::string& name, double healthPoints, int level, double XP,
     int strength, int intelligence, int dexterity, int luck, int endurance)
-    : Character(name, healthPoints, level, XP, strength, intelligence, dexterity, luck),
-    endurance(endurance), hand(nullptr) { // zainicjalizuj hand na nullptr
+    : Character(name, healthPoints, level, XP, strength, intelligence, dexterity, luck, endurance, 0.0),
+    endurance(endurance), hand(nullptr) {
 }
 
 int Hero::getEndurance() const {
