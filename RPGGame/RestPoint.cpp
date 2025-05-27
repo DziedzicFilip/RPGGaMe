@@ -28,3 +28,26 @@ void RestPoint::dialogue(Character& hero1, Character& hero2, const std::string& 
     std::cout << hero1.getName() << ": " << text1 << std::endl;
     std::cout << hero2.getName() << ": " << text2 << std::endl;
 }
+
+void RestPoint::chooseEquipment(Character& hero) const {
+    Equipment& eq = hero.getEquipment();
+    eq.displayWeapons(); // Wyœwietl dostêpne bronie
+
+    std::cout << "Wybierz numer broni, któr¹ chcesz za³o¿yæ: ";
+    int index;
+    std::cin >> index;
+
+    // Zak³adamy, ¿e Character/Hero ma setHand(Weapon*) i Equipment ma showWeaponDetails(int)
+    Weapon* selected = eq.getWeapon(index); // Dodaj getWeapon(int) jeœli nie istnieje
+    if (selected) {
+        // Jeœli to Hero:
+        Hero* h = dynamic_cast<Hero*>(&hero);
+        if (h) {
+            h->setHand(selected);
+            std::cout << "Za³o¿ono broñ: " << selected->getName() << std::endl;
+        }
+    }
+    else {
+        std::cout << "Nieprawid³owy wybór!" << std::endl;
+    }
+}

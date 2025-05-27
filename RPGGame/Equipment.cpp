@@ -83,3 +83,12 @@ void Equipment::showPotionDetails(int index) const {
         std::cout << "No potion at index " << index << std::endl;
     }
 }
+
+bool Equipment::hasPotion() const {
+    for (int i = 0; i < 5; ++i) {
+        if (potions[i] != nullptr) {
+            return true;
+        }
+    }
+    return false;
+}

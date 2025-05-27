@@ -8,7 +8,7 @@ private:
 
 public:
     RestPoint(const std::string& name);
-
+    void chooseEquipment(Character& hero) const;
     const std::string& getName() const;
     void restoreEndurance(Character& hero, int value) const;
     void restoreHP(Character& hero, double value) const;

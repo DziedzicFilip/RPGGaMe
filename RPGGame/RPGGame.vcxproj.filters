@@ -87,6 +87,9 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>Source Files\Class\Characters\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="Combat.cpp">
+      <Filter>Source Files\Class\GameMechanics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <MASM Include="AddNumbers.asm">
@@ -129,6 +132,9 @@
     </ClInclude>
     <ClInclude Include="Enemy.h">
       <Filter>Header Files\Characters\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Combat.h">
+      <Filter>Header Files\GameMechanics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

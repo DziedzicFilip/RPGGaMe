@@ -4,7 +4,7 @@
 Hero::Hero(const std::string& name, double healthPoints, int level, double XP,
     int strength, int intelligence, int dexterity, int luck, int endurance)
     : Character(name, healthPoints, level, XP, strength, intelligence, dexterity, luck),
-    endurance(endurance) {
+    endurance(endurance), hand(nullptr) { // zainicjalizuj hand na nullptr
 }
 
 int Hero::getEndurance() const {
@@ -13,6 +13,15 @@ int Hero::getEndurance() const {
 
 void Hero::setEndurance(int value) {
     endurance = value;
+}
+
+// Gettery i settery dla broni w rêku
+Weapon* Hero::getHand() const {
+    return hand;
+}
+
+void Hero::setHand(Weapon* weapon) {
+    hand = weapon;
 }
 
 void Hero::heavyAttack() {

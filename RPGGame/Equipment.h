@@ -27,6 +27,7 @@ public:
     void displayPotions() const;
     // Szczegó³y potki
     void showPotionDetails(int index) const;
+    bool hasPotion() const;
 
     // Gold
     void setGold(int value) { gold = value; }
