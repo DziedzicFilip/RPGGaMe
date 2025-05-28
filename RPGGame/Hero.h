@@ -1,7 +1,7 @@
 #pragma once
 #include "Character.h"
 #include "Weapon.h" // Dodaj ten include, jeœli nie ma
-
+#include "Enemy.h"
 class Hero : public Character {
 protected:
     int endurance;
@@ -20,13 +20,13 @@ public:
     void setHand(Weapon* weapon);
 
     // Umiejêtnoœci walki
-    void heavyAttack();
-    void lightAttack();
+    void heavyAttack(Enemy& enemy);
+    void lightAttack(Enemy& enemy);
     void dodge();
     void reflect();
-    void ignis();
-    void heal();
-    void waterBomb();
+    void ignis(Enemy& enemy);
+    void heal(Hero& hero);
+    void waterBomb(Enemy& enemy);
 
     // Implementacja perceptionTest
     bool perceptionTest() const override;

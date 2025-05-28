@@ -24,32 +24,39 @@ void Hero::setHand(Weapon* weapon) {
     hand = weapon;
 }
 
-void Hero::heavyAttack() {
-    // Implementacja póŸniej
+void Hero::heavyAttack(Enemy& enemy) {
+	enemy.setHealthPoints(enemy.getHealthPoints() - (strength * 2 + dexterity));
 }
 
-void Hero::lightAttack() {
+void Hero::lightAttack(Enemy& enemy) {
     // Implementacja póŸniej
+    enemy.setHealthPoints(enemy.getHealthPoints() - (strength + dexterity / 2));
 }
+
 
 void Hero::dodge() {
     // Implementacja póŸniej
+
 }
 
 void Hero::reflect() {
     // Implementacja póŸniej
+
 }
 
-void Hero::ignis() {
+void Hero::ignis(Enemy& enemy) {
     // Implementacja póŸniej
+	enemy.setHealthPoints(enemy.getHealthPoints() - (intelligence * 1.5 + dexterity / 2));
 }
 
-void Hero::heal() {
+void Hero::heal(Hero& hero) {
     // Implementacja póŸniej
+	
 }
 
-void Hero::waterBomb() {
+void Hero::waterBomb(Enemy& enemy) {
     // Implementacja póŸniej
+	enemy.setHealthPoints(enemy.getHealthPoints() - (intelligence * 1.2 + dexterity / 3));
 }
 
 bool Hero::perceptionTest() const {

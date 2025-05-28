@@ -21,6 +21,7 @@ public:
     void displayPotions() const;
     void showPotionDetails(int index) const;
     bool hasPotion() const;
+	Potion* getPotion(int index) const;
 
     void setGold(int value) { gold = value; }
     int getGold() const { return gold; }

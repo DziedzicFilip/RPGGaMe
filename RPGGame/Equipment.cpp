@@ -79,6 +79,13 @@ void Equipment::displayPotions() const {
     }
 }
 
+Potion* Equipment::getPotion(int index) const {
+	if (index >= 0 && index < 5) { 
+		return potions[index];
+	}
+	return nullptr;
+}
+
 // Szczegó³y potki
 void Equipment::showPotionDetails(int index) const {
     if (index >= 0 && index < 5 && potions[index]) {

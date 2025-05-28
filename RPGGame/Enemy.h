@@ -29,8 +29,8 @@ public:
 
     // Abstract methods
     virtual void dialogue(const std::string& text) const = 0;
-    virtual void heavyAttack() = 0;
-    virtual void lightAttack() = 0;
-    virtual void specialAttack() = 0;
+    virtual double heavyAttack() = 0;
+    virtual double lightAttack() = 0;
+    virtual double specialAttack() = 0;
     virtual void heal(double amount) = 0;
 };
