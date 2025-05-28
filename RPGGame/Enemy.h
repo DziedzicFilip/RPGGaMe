@@ -7,10 +7,11 @@ protected:
     double Damage;
     std::string name;
     std::string type;
+    double xp; 
 
 public:
-    Enemy(const std::string& name, const std::string& type, double healthPoints, double damage)
-        : name(name), type(type), HealthPoints(healthPoints), Damage(damage) {
+    Enemy(const std::string& name, const std::string& type, double healthPoints, double damage,double xp)
+        : name(name), type(type), HealthPoints(healthPoints), Damage(damage),xp(xp) {
     }
 
     virtual ~Enemy() {}
@@ -20,7 +21,7 @@ public:
     double getDamage() const { return Damage; }
     const std::string& getName() const { return name; }
     const std::string& getType() const { return type; }
-
+	double  getXP() const { return xp; }
     // Setters
     void setHealthPoints(double hp) { HealthPoints = hp; }
     void setDamage(double dmg) { Damage = dmg; }
@@ -29,8 +30,8 @@ public:
 
     // Abstract methods
     virtual void dialogue(const std::string& text) const = 0;
-    virtual double heavyAttack() = 0;
-    virtual double lightAttack() = 0;
-    virtual double specialAttack() = 0;
-    virtual void heal(double amount) = 0;
+    virtual double heavyAttack(Enemy& enemy) = 0;
+    virtual double lightAttack(Enemy& enemy) = 0;
+    virtual double specialAttack(Enemy& enemy) = 0;
+    virtual void heal(int amout) = 0;
 };

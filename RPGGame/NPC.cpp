@@ -3,8 +3,8 @@
 
 extern "C" int PrintText(const char* text);
 
-NPC::NPC(const std::string& name)
-    : name(name) {
+NPC::NPC(const std::string& name, Equipment equipment)
+    : name(name), equipment (equipment){
 }
 
 const std::string& NPC::getName() const {

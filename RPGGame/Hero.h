@@ -9,8 +9,8 @@ protected:
 
 public:
     Hero(const std::string& name, double healthPoints, int level, double XP,
-        int strength, int intelligence, int dexterity, int luck, int endurance);
-
+        int strength, int intelligence, int dexterity, int luck, int endurance,double mana);
+	Hero() = default; // Domyœlny konstruktor
     // Gettery i settery dla endurance
     int getEndurance() const;
     void setEndurance(int value);
@@ -29,5 +29,9 @@ public:
     void waterBomb(Enemy& enemy);
 
     // Implementacja perceptionTest
-    bool perceptionTest() const override;
+    bool perceptionTest(int event) const override;
+
+	//level up
+    void levelUp();
+    void CreateHero( Weapon& sword, Weapon& bow, Weapon& magicStick);
 };

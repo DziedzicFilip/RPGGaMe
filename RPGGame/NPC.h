@@ -8,7 +8,7 @@ private:
     Equipment equipment;
 
 public:
-    NPC(const std::string& name);
+    NPC(const std::string& name, Equipment equipment);
 
     const std::string& getName() const;
     Equipment& getEquipment();

@@ -135,13 +135,16 @@
     <ClCompile Include="Combat.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Equipment.cpp" />
+    <ClCompile Include="Goblin.cpp" />
     <ClCompile Include="Hero.cpp" />
     <ClCompile Include="MagicStick.cpp" />
     <ClCompile Include="NPC.cpp" />
     <ClCompile Include="Potion.cpp" />
+    <ClCompile Include="Progress.cpp" />
     <ClCompile Include="RestPoint.cpp" />
     <ClCompile Include="RPGGame.cpp" />
     <ClCompile Include="Sword.cpp" />
+    <ClCompile Include="TestEnv.cpp" />
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -156,10 +159,12 @@
     <ClInclude Include="Combat.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Equipment.h" />
+    <ClInclude Include="Goblin.h" />
     <ClInclude Include="Hero.h" />
     <ClInclude Include="MagicStick.h" />
     <ClInclude Include="NPC.h" />
     <ClInclude Include="Potion.h" />
+    <ClInclude Include="Progress.h" />
     <ClInclude Include="RestPoint.h" />
     <ClInclude Include="Sword.h" />
     <ClInclude Include="Weapon.h" />

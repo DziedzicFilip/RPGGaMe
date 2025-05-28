@@ -20,7 +20,7 @@ protected:
 public:
     Character(const std::string& name, double healthPoints, int level, double XP,
         int strength, int intelligence, int dexterity, int luck, int endurance, double mana);
-
+	Character() = default; // Domyœlny konstruktor
     virtual ~Character();
 
     double getHealthPoints() const { return HealthPoints; }
@@ -49,5 +49,5 @@ public:
 
     virtual void displayStats() const;
 
-    virtual bool perceptionTest() const = 0;
+    virtual bool perceptionTest(int event) const = 0;
 };

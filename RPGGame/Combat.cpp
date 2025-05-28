@@ -48,8 +48,19 @@ void Combat::chooseAction(Hero& hero, Enemy& enemy) {
 			if (potionIndex >= 0 && potionIndex < 5) {
 				Potion* potion = eq.getPotion(potionIndex);
 				if (potion) {
-					hero.setHealthPoints(hero.getHealthPoints() + potion->getAmount());
-					eq.removePotion(potionIndex);
+					
+					if (potion->getType() == Potion::Type::Health)  
+					{
+
+						hero.setHealthPoints(hero.getHealthPoints() + potion->getAmount());
+						eq.removePotion(potionIndex);
+
+					}
+					else
+					{
+						hero.setMana(hero.getMana() + potion->getAmount());
+						eq.removePotion(potionIndex);
+					}
 				}
 				else {
 					std::cout << "Nie ma takiej mikstury!\n";
@@ -75,15 +86,15 @@ void Combat::enemyTurn(Enemy& enemy, Hero& hero) {
 	case 1:
 
 		std::cout << enemy.getName() + " u¿y³ mocnego ataku!\n";
-		hero.setHealthPoints(hero.getHealthPoints() - enemy.heavyAttack());
+		hero.setHealthPoints(hero.getHealthPoints() - enemy.heavyAttack(enemy));
 		break;
 	case 2:
 		std::cout << enemy.getName() + " u¿y³ s³abego ataku!\n";
-		hero.setHealthPoints(hero.getHealthPoints() - enemy.lightAttack());
+		hero.setHealthPoints(hero.getHealthPoints() - enemy.lightAttack(enemy));
 		break;
 	case 3:
 		std::cout << enemy.getName() + " u¿y³ specjalnego ataku!\n";
-		hero.setHealthPoints(hero.getHealthPoints() - enemy.specialAttack());
+		hero.setHealthPoints(hero.getHealthPoints() - enemy.specialAttack(enemy));
 		break;
 	case 4:
 		std::cout << enemy.getName() + " u¿y³ leczenia!\n";
@@ -101,28 +112,36 @@ void Combat::CompaionionTurn(Hero& CompanionHero, Enemy& enemy)
 	switch (randomAction)
 	{
 	case 1:
-		CompanionHero.heavyAttack();
+		CompanionHero.heavyAttack(enemy);
 		break;
 	case 2:
-		CompanionHero.lightAttack();
+		CompanionHero.lightAttack(enemy);
 		break;
 	case 3:
-		CompanionHero.ignis();
+		CompanionHero.ignis(enemy);
 		break;
 	case 4:
-		CompanionHero.waterBomb();
+		CompanionHero.waterBomb(enemy);
 		break;
 	case 5:
-		CompanionHero.heal();
+		CompanionHero.heal(CompanionHero);
 		break;
 	default:
 		break;
 	}
 }
 void Combat::StartBattle() {
+	std::cout << "Rozpoczynasz walkê z " + enemy.getName() + "!\n";
+
     while (mainHero.getHealthPoints() > 0 && enemy.getHealthPoints() > 0) {
 		chooseAction(mainHero, enemy);
 		std::cout << enemy.getName() + " HP: " << enemy.getHealthPoints() << "\n";
+		if (enemy.getHealthPoints() <= 0) {
+			std::cout << "Wygra³eœ walkê!\n";
+			mainHero.setXP(mainHero.getXP() + enemy.getXP());
+			std::cout << "Zdobywasz " << enemy.getXP() << " punktów doœwiadczenia!\n";
+			break;
+		}
 		enemyTurn(enemy, mainHero);
 		std::cout << "Twoje HP: " << mainHero.getHealthPoints() << "\n";
 		if (mainHero.getHealthPoints() <= 0) {
@@ -133,6 +152,8 @@ void Combat::StartBattle() {
 		std::cout << enemy.getName() + " HP: " << enemy.getHealthPoints() << "\n";
 		if (enemy.getHealthPoints() <= 0) {
 			std::cout << "Wygra³eœ walkê!\n";
+			mainHero.setXP(mainHero.getXP() + enemy.getXP());
+			std::cout << "Zdobywasz " << enemy.getXP() << " punktów doœwiadczenia!\n";
 			break;
 		}
     
