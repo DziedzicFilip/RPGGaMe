@@ -8,12 +8,14 @@ public:
 private:
     Type type;
     double amount;
+    double value;
 
 public:
-    Potion(Type type, double amount);
+    Potion(Type type, double amount, double value);
 
     Type getType() const;
     double getAmount() const;
+	double getValue() const;
 
     
 };

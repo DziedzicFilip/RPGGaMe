@@ -105,3 +105,22 @@ bool Equipment::hasPotion() const {
     }
     return false;
 }
+
+int Equipment::getWeaponCount() const {
+	int count = 0;
+	for (int i = 0; i < 2; ++i) {
+		if (weapons[i] != nullptr) {
+			count++;
+		}
+	}
+	return count;
+}
+int Equipment::getPotionCount() const {
+	int count = 0;
+	for (int i = 0; i < 5; ++i) {
+		if (potions[i] != nullptr) {
+			count++;
+		}
+	}
+	return count;
+}

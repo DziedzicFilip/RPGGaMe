@@ -103,6 +103,7 @@ void Hero::CreateHero( Weapon& sword, Weapon& bow, Weapon& magicStick) {
 		setHand(&sword);
 		break;
 	}
+	getEquipment().addWeapon(getHand());
 	std::cout << "Bohater stworzony pomyœlnie!\n";
 }
 

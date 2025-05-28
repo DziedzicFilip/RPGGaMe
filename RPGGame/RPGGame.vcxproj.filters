@@ -99,6 +99,9 @@
     <ClCompile Include="Goblin.cpp">
       <Filter>Source Files\Class\Characters\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="Trade.cpp">
+      <Filter>Source Files\Class\GameMechanics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <MASM Include="AddNumbers.asm">
@@ -149,6 +152,9 @@
       <Filter>Header Files\Characters\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Progress.h">
+      <Filter>Header Files\GameMechanics</Filter>
+    </ClInclude>
+    <ClInclude Include="Trade.h">
       <Filter>Header Files\GameMechanics</Filter>
     </ClInclude>
   </ItemGroup>

@@ -7,10 +7,11 @@ protected:
     double attackDamage;
     double magicPower;
     std::string scaling;
+    double value;
 
 public:
-    Weapon(const std::string& name, double attackDamage, double magicPower, const std::string& scaling)
-        : name(name), attackDamage(attackDamage), magicPower(magicPower), scaling(scaling) {
+    Weapon(const std::string& name, double attackDamage, double magicPower, const std::string& scaling, double value)
+        : name(name), attackDamage(attackDamage), magicPower(magicPower), scaling(scaling),value(value) {
     }
 
     virtual ~Weapon() {}
@@ -20,6 +21,7 @@ public:
     double getAttackDamage() const { return attackDamage; }
     double getMagicPower() const { return magicPower; }
     const std::string& getScaling() const { return scaling; }
+	double getValue() const { return value; }
 
     // Setters
     void setName(const std::string& n) { name = n; }

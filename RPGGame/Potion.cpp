@@ -1,7 +1,7 @@
 #include "Potion.h"
 
-Potion::Potion(Type type, double amount)
-    : type(type), amount(amount) {
+Potion::Potion(Type type, double amount,double value)
+    : type(type), amount(amount),value(value) {
 }
 
 Potion::Type Potion::getType() const {
@@ -13,3 +13,6 @@ double Potion::getAmount() const {
 }
 
 
+double Potion::getValue() const {
+	return value;
+}

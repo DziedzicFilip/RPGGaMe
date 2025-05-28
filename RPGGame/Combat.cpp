@@ -132,7 +132,7 @@ void Combat::CompaionionTurn(Hero& CompanionHero, Enemy& enemy)
 }
 void Combat::StartBattle() {
 	std::cout << "Rozpoczynasz walkê z " + enemy.getName() + "!\n";
-
+	int random = rand() % 20 + 1; // Random number for perception test
     while (mainHero.getHealthPoints() > 0 && enemy.getHealthPoints() > 0) {
 		chooseAction(mainHero, enemy);
 		std::cout << enemy.getName() + " HP: " << enemy.getHealthPoints() << "\n";
@@ -140,6 +140,11 @@ void Combat::StartBattle() {
 			std::cout << "Wygra³eœ walkê!\n";
 			mainHero.setXP(mainHero.getXP() + enemy.getXP());
 			std::cout << "Zdobywasz " << enemy.getXP() << " punktów doœwiadczenia!\n";
+			if (random > 15)
+			{
+				std::cout << enemy.getName()+ "mial 1 golda!\n";
+				mainHero.getEquipment().setGold(mainHero.getEquipment().getGold() + 1);
+			}
 			break;
 		}
 		enemyTurn(enemy, mainHero);
@@ -154,6 +159,11 @@ void Combat::StartBattle() {
 			std::cout << "Wygra³eœ walkê!\n";
 			mainHero.setXP(mainHero.getXP() + enemy.getXP());
 			std::cout << "Zdobywasz " << enemy.getXP() << " punktów doœwiadczenia!\n";
+			if (random > 15)
+			{
+				std::cout << enemy.getName() + "mial 1 golda!\n";
+				mainHero.getEquipment().setGold(mainHero.getEquipment().getGold() + 1);
+			}
 			break;
 		}
     

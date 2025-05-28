@@ -15,6 +15,8 @@ public:
     void displayWeapons() const;
     void showWeaponDetails(int index) const;
     Weapon* getWeapon(int index) const;
+    int getWeaponCount() const;
+    int getPotionCount() const;
 
     bool addPotion(Potion* potion);
     bool removePotion(int index);

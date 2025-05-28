@@ -1,8 +1,8 @@
 #include "Bow.h"
 #include <iostream>
 
-Bow::Bow(const std::string& name, double attackDamage, double magicPower, const std::string& /*scaling*/)
-    : Weapon(name, attackDamage, magicPower, "dex") {
+Bow::Bow(const std::string& name, double attackDamage, double magicPower, const std::string&, double value /*scaling*/)
+    : Weapon(name, attackDamage, magicPower, "dex",value) {
 }
 
 void Bow::heavyAttack() const {
