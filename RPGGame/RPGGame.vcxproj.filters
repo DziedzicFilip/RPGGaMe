@@ -49,6 +49,15 @@
     <Filter Include="Header Files\Characters\Enemy">
       <UniqueIdentifier>{1978eb98-f049-4746-8e99-047676ad020c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Class\JustToRunGame">
+      <UniqueIdentifier>{8d5bd088-c8e5-43d5-bfbb-04b4fed93fb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\JustToRunGame">
+      <UniqueIdentifier>{b2ada248-2bc8-4fe0-8b25-4f3b9dffef21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Story">
+      <UniqueIdentifier>{353f405b-d85b-4f45-8d95-f1aca5e15920}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RPGGame.cpp">
@@ -102,8 +111,17 @@
     <ClCompile Include="Trade.cpp">
       <Filter>Source Files\Class\GameMechanics</Filter>
     </ClCompile>
-    <ClCompile Include="Act.cpp">
+    <ClCompile Include="createWeaponFromType.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Act.cpp">
+      <Filter>Source Files\Class\JustToRunGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files\Class\JustToRunGame</Filter>
+    </ClCompile>
+    <ClCompile Include="GameState.cpp">
+      <Filter>Source Files\Class\JustToRunGame</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -160,13 +178,28 @@
     <ClInclude Include="Trade.h">
       <Filter>Header Files\GameMechanics</Filter>
     </ClInclude>
-    <ClInclude Include="Act.h">
+    <ClInclude Include="createWeaponFromType.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files\JustToRunGame</Filter>
+    </ClInclude>
+    <ClInclude Include="GameState.h">
+      <Filter>Header Files\JustToRunGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Act.h">
+      <Filter>Header Files\JustToRunGame</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Text.txt">
       <Filter>Source Files\Class</Filter>
+    </Text>
+    <Text Include="Prolog.txt">
+      <Filter>Source Files\Story</Filter>
+    </Text>
+    <Text Include="Akt1.txt">
+      <Filter>Source Files\Story</Filter>
     </Text>
   </ItemGroup>
 </Project>

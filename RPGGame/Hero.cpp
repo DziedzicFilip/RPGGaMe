@@ -26,7 +26,7 @@ void Hero::setHand(Weapon* weapon) {
 }
 
 void Hero::heavyAttack(Enemy& enemy) {
-	enemy.setHealthPoints(enemy.getHealthPoints() - (strength * 2 + dexterity));
+	enemy.setHealthPoints(enemy.getHealthPoints() - (strength + dexterity + getHand()->getAttackDamage()));
 }
 
 void Hero::lightAttack(Enemy& enemy) {
@@ -47,7 +47,7 @@ void Hero::reflect() {
 
 void Hero::ignis(Enemy& enemy) {
     // Implementacja póŸniej
-	enemy.setHealthPoints(enemy.getHealthPoints() - (intelligence * 1.5 + dexterity / 2));
+	enemy.setHealthPoints(enemy.getHealthPoints() - (intelligence * 1.5 + dexterity / 2 + getHand()->getMagicPower()));
 }
 
 void Hero::heal(Hero& hero) {
@@ -57,13 +57,13 @@ void Hero::heal(Hero& hero) {
 
 void Hero::waterBomb(Enemy& enemy) {
     // Implementacja póŸniej
-	enemy.setHealthPoints(enemy.getHealthPoints() - (intelligence * 1.2 + dexterity / 3));
+	enemy.setHealthPoints(enemy.getHealthPoints() - (intelligence * 1.2 + dexterity / 3+ getHand()->getMagicPower()));
 }
 
 bool Hero::perceptionTest(int event) const {
 	int random = std::rand() % 20 + 1; 
 	if (random < event) {
-		std::cout << "Perception test failed." << std::endl;
+		//std::cout << "Perception test failed." << std::endl;
 		return false;
 	}
     return true;
@@ -187,4 +187,13 @@ void Hero:: levelUp() {
 	}
 
 
+}
+
+void Hero::CheckIfLevelUp() {
+	if (getXP() >= 100) { 
+		levelUp();
+		setXP(getXP() - 100); 
+		std::cout << "Gratulacje! Twój bohater awansowa³ na wy¿szy poziom!\n";
+		
+	}
 }

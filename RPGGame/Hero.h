@@ -18,6 +18,7 @@ public:
     // Gettery i settery dla broni w rêku
     Weapon* getHand() const;
     void setHand(Weapon* weapon);
+	
 
     // Umiejêtnoœci walki
     void heavyAttack(Enemy& enemy);
@@ -34,4 +35,5 @@ public:
 	//level up
     void levelUp();
     void CreateHero( Weapon& sword, Weapon& bow, Weapon& magicStick);
+    void CheckIfLevelUp();
 };

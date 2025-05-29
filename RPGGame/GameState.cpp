@@ -1,23 +1,21 @@
 #include "GameState.h"
-#include "Hero.h"
+#include <fstream>
+#include <iostream>
 #include "Equipment.h"
 #include "Weapon.h"
+#include "Potion.h"
 #include "Sword.h"
 #include "Bow.h"
 #include "MagicStick.h"
-#include "Potion.h"
-#include <fstream>
-#include <iostream>
+#include "Act.h"
 
-// --- Zapis stanu gry ---
-bool GameState::saveGame(const Hero& hero, const std::string& filename) {
+bool GameState::saveGame(const Hero& hero, const Act& act, const std::string& filename) {
     std::ofstream ofs(filename);
     if (!ofs.is_open()) {
         std::cerr << "Nie mozna otworzyc pliku do zapisu: " << filename << std::endl;
         return false;
     }
 
-    // Zapis podstawowych statystyk
     ofs << "Name " << hero.getName() << "\n";
     ofs << "HealthPoints " << hero.getHealthPoints() << "\n";
     ofs << "Level " << hero.getLevel() << "\n";
@@ -29,15 +27,21 @@ bool GameState::saveGame(const Hero& hero, const std::string& filename) {
     ofs << "Endurance " << hero.getEndurance() << "\n";
     ofs << "Mana " << hero.getMana() << "\n";
 
-    // Zapis ekwipunku
     saveEquipment(ofs, hero.getEquipment());
 
+    ofs << "StoryProgress\n";
+    for (int i = 0; i < 100; ++i) {
+        if (act.isChapterCompleted(i)) {
+            ofs << "ChapterCompleted " << i << "\n";
+        }
+    }
+
+    ofs << "EndStory\n";
     ofs.close();
     return true;
 }
 
-// --- Wczytanie stanu gry ---
-bool GameState::loadGame(Hero& hero, const std::string& filename) {
+bool GameState::loadGame(Hero& hero, Act& act, const std::string& filename) {
     std::ifstream ifs(filename);
     if (!ifs.is_open()) {
         std::cerr << "Nie mozna otworzyc pliku do odczytu: " << filename << std::endl;
@@ -47,9 +51,7 @@ bool GameState::loadGame(Hero& hero, const std::string& filename) {
     std::string key;
     while (ifs >> key) {
         if (key == "Name") {
-            std::string value;
-            ifs >> value;
-            hero.setName(value);
+            std::string value; ifs >> value; hero.setName(value);
         }
         else if (key == "HealthPoints") {
             double val; ifs >> val; hero.setHealthPoints(val);
@@ -81,28 +83,33 @@ bool GameState::loadGame(Hero& hero, const std::string& filename) {
         else if (key == "EquipmentStart") {
             loadEquipment(ifs, hero);
         }
+        else if (key == "StoryProgress") {
+            std::string subkey;
+            while (ifs >> subkey && subkey != "EndStory") {
+                if (subkey == "ChapterCompleted") {
+                    int chapterId; ifs >> chapterId;
+                    act.markChapterCompleted(chapterId);
+                }
+            }
+        }
     }
 
     ifs.close();
     return true;
 }
 
-// --- Zapis ekwipunku ---
 void GameState::saveEquipment(std::ofstream& ofs, const Equipment& equipment) {
     ofs << "EquipmentStart\n";
-
-    // Bronie
     int weaponCount = equipment.getWeaponCount();
     ofs << "WeaponsCount " << weaponCount << "\n";
     for (int i = 0; i < 2; ++i) {
         Weapon* w = equipment.getWeapon(i);
         if (w) {
             ofs << "Weapon " << i << " " << w->getName() << " " << w->getAttackDamage() << " "
-                << w->getMagicPower() << " " << w->getScaling() << " " << w->getValue() << "\n";
+                << w->getMagicPower() << " " << w->getValue() << "\n";
         }
     }
 
-    // Mikstury
     int potionCount = equipment.getPotionCount();
     ofs << "PotionsCount " << potionCount << "\n";
     for (int i = 0; i < 5; ++i) {
@@ -113,71 +120,75 @@ void GameState::saveEquipment(std::ofstream& ofs, const Equipment& equipment) {
                 << p->getAmount() << "\n";
         }
     }
-
     ofs << "EquipmentEnd\n";
 }
 
-// --- Wczytanie ekwipunku ---
 void GameState::loadEquipment(std::ifstream& ifs, Hero& hero) {
     Equipment& equipment = hero.getEquipment();
-
     std::string key;
     while (ifs >> key) {
-        if (key == "EquipmentEnd") {
-            break;
-        }
-        else if (key == "WeaponsCount") {
-            int count; ifs >> count;
-            // Nie potrzebujemy tego do wczytania, ale mo¿na zachowaæ
-        }
+        if (key == "EquipmentEnd") break;
         else if (key == "Weapon") {
-            int index;
-            std::string name;
-            double attackDamage, magicPower, value;
-            std::string scaling;
-
-            ifs >> index >> name >> attackDamage >> magicPower >> scaling >> value;
+            int index; std::string name; double attackDamage, magicPower, value;
+            ifs >> index >> name >> attackDamage >> magicPower >> value;
             Weapon* weapon = createWeaponByName(name);
-            if (weapon == nullptr) {
-                // Jeœli nie ma takiej broni, stworzymy "domyœln¹"
-                // np. miecz z podanymi statystykami
-                weapon = new Sword(name, attackDamage, magicPower, value);
-            }
-            // Ustaw statystyki broni w razie potrzeby, tutaj pomijamy dla uproszczenia
+            if (!weapon) weapon = new Sword(name, attackDamage, magicPower, value);
             equipment.addWeapon(weapon);
-
-            // Jeœli indeks 0 to ustawiamy rêkê bohatera
-            if (index == 0) {
-                hero.setHand(weapon);
-            }
-        }
-        else if (key == "PotionsCount") {
-            int count; ifs >> count;
-            // Mo¿na wykorzystaæ jeœli potrzebne
+            if (index == 0) hero.setHand(weapon);
         }
         else if (key == "Potion") {
-            int index; std::string typeStr; int amount;
+            int index; std::string typeStr; double amount;
             ifs >> index >> typeStr >> amount;
-
             Potion::Type type = (typeStr == "Health") ? Potion::Type::Health : Potion::Type::Mana;
-            Potion* potion = new Potion(type, amount,10);
-            equipment.addPotion(potion);
+            equipment.addPotion(new Potion(type, amount, 0));
         }
     }
 }
-
-// --- Tworzenie broni na podstawie nazwy (proste mapowanie) ---
 Weapon* GameState::createWeaponByName(const std::string& name) {
-    // Mo¿esz tutaj zaimplementowaæ mapowanie nazw na klasy
-    // Na przyk³ad:
-    if (name.find("Sword") != std::string::npos) {
-        return new Sword(name, 10, 0, 100);  // statyczne dummy wartoœci
+    if (name == "Excalibur") {
+        return new Sword("Excalibur", 20.0, 10.0, 10);
     }
-    else if (name.find("Bow") != std::string::npos) {
-        return new Bow(name, 8, 0, 50);
+    else if (name == "Longbow") {
+        return new Bow("Longbow", 15.0, 5.0, 10);
     }
-    else if (name.find("MagicStick") != std::string::npos) {
-        return new MagicStick(name, 5, 15, 75);
+    else if (name == "Elder Wand") {
+        return new MagicStick("Elder Wand", 25.0, 15.0, 10);
     }
+    // Jeœli nazwa nieznana, mo¿esz zwróciæ nullptr lub domyœln¹ broñ
     return nullptr;
 }
+
+bool GameState::hasSaveFile(const std::string& filename) {
+    struct stat buffer;
+    return (stat(filename.c_str(), &buffer) == 0);
+}
+bool GameState::shouldLoadGame(const std::string& filename) {
+    if (hasSaveFile(filename)) {
+        std::cout << "Znaleziono zapis gry.\n";
+        std::cout << "1. Wczytaj grê\n";
+        std::cout << "2. Nowa gra\n";
+        std::cout << "Wybierz opcjê: ";
+        int choice;
+        std::cin >> choice;
+        std::cin.ignore(); // czyœci enter po cin
+
+        if (choice == 1) {
+            return true;
+        }
+        else {
+            // Usuñ plik save.txt jeœli istnieje
+            if (std::remove(filename.c_str()) == 0) {
+                std::cout << "Poprzedni zapis gry zosta³ usuniêty.\n";
+            }
+            else {
+                std::cerr << "Nie uda³o siê usun¹æ pliku zapisu.\n";
+            }
+            return false;
+        }
+    }
+    else {
+        std::cout << "Nie znaleziono zapisu gry. Tworzê now¹ grê...\n";
+        return false;
+    }
+}
+

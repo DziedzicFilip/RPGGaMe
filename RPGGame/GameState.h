@@ -1,20 +1,15 @@
-#pragma once
-#include <string>
-#include "Hero.h"
-
+// GameState.h
+#include  "Hero.h"
+#include "Act.h"
 class GameState {
 public:
-    // Zapis stanu do pliku
-    static bool saveGame(const Hero& hero, const std::string& filename);
-
-    // Wczytanie stanu z pliku
-    static bool loadGame(Hero& hero, const std::string& filename);
+    static bool saveGame(const Hero& hero, const Act& act, const std::string& filename);
+    static bool loadGame(Hero& hero, Act& act, const std::string& filename);
+    static bool hasSaveFile(const std::string& filename);  // <-- NOWA
+    static bool shouldLoadGame(const std::string& filename);
 
 private:
-    // Pomocnicze metody do zapisu / odczytu ekwipunku
     static void saveEquipment(std::ofstream& ofs, const Equipment& equipment);
     static void loadEquipment(std::ifstream& ifs, Hero& hero);
-
-    // Pomocnicze do broni
     static Weapon* createWeaponByName(const std::string& name);
 };
