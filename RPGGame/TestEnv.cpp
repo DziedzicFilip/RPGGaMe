@@ -12,6 +12,7 @@
 #include "NPC.h"
 #include "Potion.h"
 #include "Trade.h"
+#include "Act.h"
 using namespace std;
 // Menu przy starcie i zapis w obiekcie po  kadzym punkcie wykonanym 
 // 
@@ -27,9 +28,12 @@ int main() {
     // Welcome message using our assembly function
     const char* welcome = "Witaj w œwiecie RPG Game - Las Cieni";
     PrintText(welcome);
-	Bow bow("Longbow", 15.0, 5.0, "Dexterity",10);
-	Sword sword("Excalibur", 20.0, 10.0, "Strength",10);
-	MagicStick magicStick("Elder Wand", 25.0, 15.0, "Intelligence",10);
+	Bow bow("Longbow", 15.0, 5.0,10);
+	Sword sword("Excalibur", 20.0, 10.0,10);
+	MagicStick magicStick("Elder Wand", 25.0, 15.0,10);
+	Bow bow2("NPC-merch-bow", 15.0, 5.0, 10);
+	Sword sword2("NPC-merch-sword", 20.0, 10.0, 10);
+	MagicStick magicStick2("NPC-merch-wand", 25.0, 15.0, 10);
 	// Create a hero
 	Hero hero;
 	Hero CompanionHero("Przydupas",9999,0,0,10,10,10,10,10,10);
@@ -46,10 +50,15 @@ int main() {
 	equipment.addWeapon(&bow);
 	equipment.addWeapon(&sword);
 	equipment.addPotion(&healthPotion);
-	NPC npc("Astarion",equipment);
+	Equipment equipment2;
+	equipment2.addWeapon(&bow2);
+	equipment2.addWeapon(&sword2);
+	equipment2.addPotion(&healthPotion);
+
+	NPC npc("Astarion",equipment2);
 	//npc.getEquipment().displayWeapons();
 	//npc.getEquipment().displayPotions();
-	hero.getEquipment().addWeapon(&bow);
+	/*hero.getEquipment().addWeapon(&bow);
 	hero.getEquipment().addWeapon(&sword);
 	hero.getEquipment().displayWeapons();
 	hero.getEquipment().displayGold();
@@ -59,5 +68,15 @@ int main() {
 	Trade trade;
 	trade.StartTrade(npc, hero);
 	hero.getEquipment().displayWeapons();
+	hero.getEquipment().displayPotions();
+	npc.getEquipment().displayWeapons();
+	npc.getEquipment().displayPotions();*/
+	Act act;
+	if (act.loadFromFile("Text.txt")) {
+		act.printAllChaptersStatus();
+		std::cout << act.getChapterContent(1) << std::endl;
+		act.markChapterCompleted(1);
+		act.printAllChaptersStatus();
+	}
     return 0;
 }

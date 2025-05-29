@@ -130,6 +130,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Act.cpp" />
     <ClCompile Include="Bow.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="Combat.cpp" />
@@ -155,6 +156,7 @@
     <MASM Include="PrintText.asm" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Act.h" />
     <ClInclude Include="Bow.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="Combat.h" />
@@ -170,6 +172,9 @@
     <ClInclude Include="Sword.h" />
     <ClInclude Include="Trade.h" />
     <ClInclude Include="Weapon.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Text.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

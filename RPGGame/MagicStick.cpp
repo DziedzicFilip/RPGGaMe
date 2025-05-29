@@ -3,8 +3,8 @@
 // Deklaracja funkcji z asm
 extern "C" int PrintText(const char* text);
 
-MagicStick::MagicStick(const std::string& name, double attackDamage, double magicPower, const std::string&, double value /*scaling*/)
-    : Weapon(name, attackDamage, magicPower, "ap",value) {
+MagicStick::MagicStick(const std::string& name, double attackDamage, double magicPower, double value)
+    : Weapon(name, attackDamage, magicPower, "ap", value, Type::MagicStick) {
 }
 
 void MagicStick::ignis() const {

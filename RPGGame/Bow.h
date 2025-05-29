@@ -3,7 +3,8 @@
 
 class Bow : public Weapon {
 public:
-    Bow(const std::string& name, double attackDamage, double magicPower, const std::string& scaling, double value);
+    // Konstruktor BEZ parametru scaling, bo zawsze "dex"
+    Bow(const std::string& name, double attackDamage, double magicPower, double value);
 
     void heavyAttack() const;
     void lightAttack() const;

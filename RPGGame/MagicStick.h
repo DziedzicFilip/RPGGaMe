@@ -3,7 +3,7 @@
 
 class MagicStick : public Weapon {
 public:
-    MagicStick(const std::string& name, double attackDamage, double magicPower, const std::string& scaling, double value);
+    MagicStick(const std::string& name, double attackDamage, double magicPower, double value);
 
     void ignis() const;
     void waterBomb() const;

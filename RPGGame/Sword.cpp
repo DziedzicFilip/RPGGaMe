@@ -1,8 +1,8 @@
 #include "Sword.h"
 #include <iostream>
 
-Sword::Sword(const std::string& name, double attackDamage, double magicPower, const std::string&, double value /*scaling*/)
-    : Weapon(name, attackDamage, magicPower, "ad",value) {
+Sword::Sword(const std::string& name, double attackDamage, double magicPower, double value)
+    : Weapon(name, attackDamage, magicPower, "ad", value, Type::Sword) {
 }
 
 void Sword::heavyAttack() const {

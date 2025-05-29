@@ -102,6 +102,9 @@
     <ClCompile Include="Trade.cpp">
       <Filter>Source Files\Class\GameMechanics</Filter>
     </ClCompile>
+    <ClCompile Include="Act.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <MASM Include="AddNumbers.asm">
@@ -157,5 +160,13 @@
     <ClInclude Include="Trade.h">
       <Filter>Header Files\GameMechanics</Filter>
     </ClInclude>
+    <ClInclude Include="Act.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Text.txt">
+      <Filter>Source Files\Class</Filter>
+    </Text>
   </ItemGroup>
 </Project>

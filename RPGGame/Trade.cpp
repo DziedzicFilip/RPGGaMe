@@ -51,7 +51,7 @@ void Trade::StartTrade(NPC& npc, Hero& hero) {
 
 void Trade::BuyItem(NPC& npc, Hero& hero) {
 	std::cout << "Choose an item to buy from the NPC's inventory." << std::endl;
-	ShowInventoryNpc(npc);
+	npc.getEquipment().displayWeapons();
 
 	int choice;
 	std::cin >> choice;
@@ -70,24 +70,28 @@ void Trade::BuyItem(NPC& npc, Hero& hero) {
 		return;
 	}
 
-	bool added = hero.getEquipment().addWeapon(weaponToBuy);
-
-	if (!added) {
-		std::cout << "You don't have space for the weapon. It will be discarded after purchase." << std::endl;
-		delete weaponToBuy;  // usuwamy z pamiêci
+	if (hero.getEquipment().getWeaponCount() >= 2) {
+		std::cout << "You don't have space for more weapons" << std::endl;
+		
+		return;
 	}
+	else
+	{
+		hero.getEquipment().setGold(hero.getEquipment().getGold() - value);
+		npc.getEquipment().removeWeapon(choice);
+		hero.getEquipment().addWeapon(weaponToBuy);  
+		std::cout << "You bought " << weaponToBuy->getName()
+			<< " for " << value << " gold." << std::endl;
+	}
+	
 
-	// Zmniejszamy z³oto i usuwamy broñ z NPC-a
-	hero.getEquipment().setGold(hero.getEquipment().getGold() - value);
-	npc.getEquipment().removeWeapon(choice);
-
-	std::cout << "You bought " << weaponToBuy->getName()
-		<< " for " << value << " gold." << std::endl;
+	
+	
 }
 
 void Trade::SellItem(NPC& npc, Hero& hero) {
 	std::cout << "Choose an item to sell from your inventory." << std::endl;
-	npc.getEquipment().displayWeapons();  
+	hero.getEquipment().displayWeapons();  
 	int choice;
 	std::cin >> choice;
 
@@ -153,8 +157,8 @@ void Trade::BuyPotion(NPC& npc, Hero& hero) {
 		hero.getEquipment().addPotion(potionToBuy);
 	}
 	else {
-		std::cout << "You don't have space. The potion will be discarded after buying." << std::endl;
-		delete potionToBuy;  // mikstura przepada
+		std::cout << "You don't have space. " << std::endl;
+		return;
 	}
 
 	// Odejmowanie z³ota bohatera
@@ -162,7 +166,7 @@ void Trade::BuyPotion(NPC& npc, Hero& hero) {
 
 	// Usuniêcie mikstury z ekwipunku NPC-a
 	npc.getEquipment().removePotion(choice);
-
+	hero.getEquipment().addPotion(potionToBuy);  // dodanie mikstury do ekwipunku bohatera
 	std::cout << "You bought a " << potionType << " potion for " << value << " gold." << std::endl;
 }
 
