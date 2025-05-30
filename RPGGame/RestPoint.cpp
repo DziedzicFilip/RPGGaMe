@@ -33,7 +33,7 @@ void RestPoint::dialogue(Character& hero1, Character& hero2, const std::string& 
 
 void RestPoint::chooseEquipment(Character& hero) const {
     Equipment& eq = hero.getEquipment();
-    eq.displayWeapons(); // Wyswietl dostepne bronie
+    eq.displayWeapons(); 
 
     std::cout << "Wybierz numer broni, ktora chcesz zalozyc: ";
     int index;
