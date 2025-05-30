@@ -142,6 +142,7 @@
     <ClCompile Include="Goblin.cpp" />
     <ClCompile Include="Hero.cpp" />
     <ClCompile Include="MagicStick.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="NPC.cpp" />
     <ClCompile Include="Potion.cpp" />
     <ClCompile Include="Progress.cpp" />
@@ -171,6 +172,7 @@
     <ClInclude Include="Goblin.h" />
     <ClInclude Include="Hero.h" />
     <ClInclude Include="MagicStick.h" />
+    <ClInclude Include="main.h" />
     <ClInclude Include="NPC.h" />
     <ClInclude Include="Potion.h" />
     <ClInclude Include="Progress.h" />

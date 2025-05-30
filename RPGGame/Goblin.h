@@ -8,9 +8,9 @@ public:
 	Goblin(const std::string& name, const std::string& type, double healthPoints, double damage, double xp)
 		: Enemy(name, type, healthPoints, damage, xp) {
 	}
-	// Implementacja metod wirtualnych
+	
 	void dialogue(const std::string& text) const override {
-		std::cout << "Goblin says: " << text << "\n";
+		std::cout << "Goblin mowi: " << text << "\n";
 	}
 	double heavyAttack(Enemy& enemy) override {
 		return enemy.getDamage() + 10;

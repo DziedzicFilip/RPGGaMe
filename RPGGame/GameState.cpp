@@ -144,6 +144,7 @@ void GameState::loadEquipment(std::ifstream& ifs, Hero& hero) {
         }
     }
 }
+
 Weapon* GameState::createWeaponByName(const std::string& name) {
     if (name == "Excalibur") {
         return new Sword("Excalibur", 20.0, 10.0, 10);
@@ -154,7 +155,7 @@ Weapon* GameState::createWeaponByName(const std::string& name) {
     else if (name == "Elder Wand") {
         return new MagicStick("Elder Wand", 25.0, 15.0, 10);
     }
-    // Jeœli nazwa nieznana, mo¿esz zwróciæ nullptr lub domyœln¹ broñ
+    // Jesli nazwa nieznana, mozesz zwrocic nullptr lub domyslna bron
     return nullptr;
 }
 
@@ -162,35 +163,37 @@ bool GameState::hasSaveFile(const std::string& filename) {
     struct stat buffer;
     return (stat(filename.c_str(), &buffer) == 0);
 }
+
 bool GameState::shouldLoadGame(const std::string& filename) {
     if (hasSaveFile(filename)) {
         std::cout << "Znaleziono zapis gry.\n";
-        std::cout << "1. Wczytaj grê\n";
+        std::cout << "1. Wczytaj gre\n";
         std::cout << "2. Nowa gra\n";
-        std::cout << "Wybierz opcjê: ";
+        std::cout << "Wybierz opcje: ";
         int choice;
         std::cin >> choice;
-        std::cin.ignore(); // czyœci enter po cin
+        std::cin.ignore(); // czysci enter po cin
 
         if (choice == 1) {
             return true;
         }
         else {
-            // Usuñ plik save.txt jeœli istnieje
+            // Usun plik save.txt jesli istnieje
             if (std::remove(filename.c_str()) == 0) {
-                std::cout << "Poprzedni zapis gry zosta³ usuniêty.\n";
+                std::cout << "Poprzedni zapis gry zostal usuniety.\n";
             }
             else {
-                std::cerr << "Nie uda³o siê usun¹æ pliku zapisu.\n";
+                std::cerr << "Nie udalo sie usunac pliku zapisu.\n";
             }
             return false;
         }
     }
     else {
-        std::cout << "Nie znaleziono zapisu gry. Tworzê now¹ grê...\n";
+        std::cout << "Nie znaleziono zapisu gry. Tworze nowa gre...\n";
         return false;
     }
 }
+
 int GameState::getNextChapterFromSave(const std::string& filename) {
     std::ifstream file(filename);
     if (!file.is_open()) {
@@ -209,13 +212,12 @@ int GameState::getNextChapterFromSave(const std::string& filename) {
                     lastChapter = std::stoi(numberStr);
                 }
                 catch (...) {
-                    // ignoruj b³¹d konwersji
+                    // ignoruj blad konwersji
                 }
             }
         }
     }
 
     file.close();
-    return lastChapter + 1; // nastêpny do rozegrania
+    return lastChapter + 1; // nastepny do rozegrania
 }
-

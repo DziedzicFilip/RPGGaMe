@@ -5,17 +5,17 @@
 
 class Game {
 public:
-    Game(); // nowa gra
-    Game(const std::string& saveFile); // wczytanie gry z pliku
-    void continueLoadedGame(); // pomocnicza do kontynuacji gry
-    void start(); // odpala g³ówn¹ pêtlê gry
+    Game(); 
+    Game(const std::string& saveFile); 
+    void continueLoadedGame(); 
+    void start(); 
 
 private:
     Hero hero;
     Act act;
     std::string filename = "save.txt";
 
-    void createNewGame(); // pomocnicza do nowej gry
+    void createNewGame(); 
     
-	void continueGame(); // pomocnicza do kontynuacji gry po ka¿dym rozdziale
+	void continueGame(); 
 };

@@ -1,11 +1,11 @@
 #pragma once
 #include "Character.h"
-#include "Weapon.h" // Dodaj ten include, jeœli nie ma
+#include "Weapon.h" 
 #include "Enemy.h"
 class Hero : public Character {
 protected:
     int endurance;
-    Weapon* hand = nullptr; // Aktualnie u¿ywana broñ
+    Weapon* hand = nullptr; 
     int fullHp;
 	int fullMana;
 	int fullStrength;
@@ -17,7 +17,7 @@ protected:
 public:
     Hero(const std::string& name, double healthPoints, int level, double XP,
         int strength, int intelligence, int dexterity, int luck, int endurance,double mana);
-	Hero() = default; // Domyœlny konstruktor
+	Hero() = default;
     // Gettery i settery dla endurance
     int getEndurance() const;
     void setEndurance(int value);

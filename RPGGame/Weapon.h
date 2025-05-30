@@ -26,14 +26,14 @@ public:
     double getMagicPower() const { return magicPower; }
     const std::string& getScaling() const { return scaling; }
     double getValue() const { return value; }
-    Type getType() const { return type; } // Optional getter for type
+    Type getType() const { return type; } 
 
     // Setters
     void setName(const std::string& n) { name = n; }
     void setAttackDamage(double dmg) { attackDamage = dmg; }
     void setMagicPower(double mp) { magicPower = mp; }
     void setScaling(const std::string& s) { scaling = s; }
-    void setType(Type t) { type = t; } // Optional setter for type
+    void setType(Type t) { type = t; } 
 
     // Abstract method
     virtual void displayStats() const = 0;

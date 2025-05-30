@@ -20,9 +20,9 @@ bool Equipment::removeWeapon(int index) {
     return false;
 }
 
-// Wyœwietlanie broni
+// Wyswietlanie broni
 void Equipment::displayWeapons() const {
-    std::cout << "Weapons:" << std::endl;
+    std::cout << "Bronie:" << std::endl;
     for (int i = 0; i < 2; ++i) {
         if (weapons[i]) {
             std::cout << i << ": ";
@@ -31,17 +31,18 @@ void Equipment::displayWeapons() const {
     }
 }
 
-// Szczegó³y broni
+// Szczegoly broni
 void Equipment::showWeaponDetails(int index) const {
     if (index >= 0 && index < 2 && weapons[index]) {
         weapons[index]->displayStats();
     }
     else {
-        std::cout << "No weapon at index " << index << std::endl;
+        std::cout << "Brak broni na indeksie " << index << std::endl;
     }
 }
+
 Weapon* Equipment::getWeapon(int index) const {
-    if (index >= 0 && index < 2) { // Zak³adam, ¿e masz 2 sloty na broñ
+    if (index >= 0 && index < 2) {
         return weapons[index];
     }
     return nullptr;
@@ -67,33 +68,33 @@ bool Equipment::removePotion(int index) {
     return false;
 }
 
-// Wyœwietlanie potek
+// Wyswietlanie potek
 void Equipment::displayPotions() const {
-    std::cout << "Potions:" << std::endl;
+    std::cout << "Potki:" << std::endl;
     for (int i = 0; i < 5; ++i) {
         if (potions[i]) {
             std::cout << i << ": ";
-            std::cout << "Potion type: " << (potions[i]->getType() == Potion::Type::Health ? "Health" : "Mana")
-                << ", amount: " << potions[i]->getAmount() << std::endl;
+            std::cout << "Typ potki: " << (potions[i]->getType() == Potion::Type::Health ? "Zdrowie" : "Mana")
+                << ", ilosc: " << potions[i]->getAmount() << std::endl;
         }
     }
 }
 
 Potion* Equipment::getPotion(int index) const {
-	if (index >= 0 && index < 5) { 
-		return potions[index];
-	}
-	return nullptr;
+    if (index >= 0 && index < 5) {
+        return potions[index];
+    }
+    return nullptr;
 }
 
-// Szczegó³y potki
+// Szczegoly potki
 void Equipment::showPotionDetails(int index) const {
     if (index >= 0 && index < 5 && potions[index]) {
-        std::cout << "Potion type: " << (potions[index]->getType() == Potion::Type::Health ? "Health" : "Mana")
-            << ", amount: " << potions[index]->getAmount() << std::endl;
+        std::cout << "Typ potki: " << (potions[index]->getType() == Potion::Type::Health ? "Zdrowie" : "Mana")
+            << ", ilosc: " << potions[index]->getAmount() << std::endl;
     }
     else {
-        std::cout << "No potion at index " << index << std::endl;
+        std::cout << "Brak potki na indeksie " << index << std::endl;
     }
 }
 
@@ -107,20 +108,21 @@ bool Equipment::hasPotion() const {
 }
 
 int Equipment::getWeaponCount() const {
-	int count = 0;
-	for (int i = 0; i < 2; ++i) {
-		if (weapons[i] != nullptr) {
-			count++;
-		}
-	}
-	return count;
+    int count = 0;
+    for (int i = 0; i < 2; ++i) {
+        if (weapons[i] != nullptr) {
+            count++;
+        }
+    }
+    return count;
 }
+
 int Equipment::getPotionCount() const {
-	int count = 0;
-	for (int i = 0; i < 5; ++i) {
-		if (potions[i] != nullptr) {
-			count++;
-		}
-	}
-	return count;
+    int count = 0;
+    for (int i = 0; i < 5; ++i) {
+        if (potions[i] != nullptr) {
+            count++;
+        }
+    }
+    return count;
 }

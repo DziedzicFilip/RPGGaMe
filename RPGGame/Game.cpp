@@ -18,7 +18,7 @@ Game::Game() {
 Game::Game(const std::string& saveFile) {
     filename = saveFile;
     if (!GameState::loadGame(hero, act, filename)) {
-        std::cerr << "Nie uda³o siê wczytaæ gry. Tworzê now¹ grê...\n";
+        std::cerr << "Nie udalo sie wczytac gry. Tworze now¹ gre...\n";
 		start();
     }
 }
@@ -30,7 +30,7 @@ void Game::createNewGame() {
     hero.CreateHero(sword, bow, magicStick);
 
     if (!act.loadFromFile("Text.txt")) {
-        std::cerr << "Nie uda³o siê za³adowaæ fabu³y.\n";
+        std::cerr << "Nie udalo sie za³adowaæ fabu³y.\n";
     }
 
     GameState::saveGame(hero, act, filename);

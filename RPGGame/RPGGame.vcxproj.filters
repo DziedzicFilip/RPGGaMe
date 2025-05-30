@@ -123,6 +123,9 @@
     <ClCompile Include="GameState.cpp">
       <Filter>Source Files\Class\JustToRunGame</Filter>
     </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <MASM Include="AddNumbers.asm">
@@ -189,6 +192,9 @@
     </ClInclude>
     <ClInclude Include="Act.h">
       <Filter>Header Files\JustToRunGame</Filter>
+    </ClInclude>
+    <ClInclude Include="main.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

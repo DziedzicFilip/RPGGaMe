@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <iostream>
-#include "Equipment.h" // pe³na definicja potrzebna
+#include "Equipment.h" 
 
 class Character {
 protected:
@@ -15,12 +15,12 @@ protected:
     int luck;
     int endurance;
     double mana;
-    Equipment eq; // musi byæ po pe³nej definicji klasy Equipment
+    Equipment eq; 
 
 public:
     Character(const std::string& name, double healthPoints, int level, double XP,
         int strength, int intelligence, int dexterity, int luck, int endurance, double mana);
-	Character() = default; // Domyœlny konstruktor
+	Character() = default;
     virtual ~Character();
 
     double getHealthPoints() const { return HealthPoints; }
