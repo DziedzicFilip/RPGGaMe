@@ -61,6 +61,7 @@ void Game::continueLoadedGame() {
     Trade trade;
     bool exit = true;
     int choice;
+    int result;
     switch (nextChapter) {
     case 1:
         prologue.loadFromFile("Prolog.txt");
@@ -96,78 +97,114 @@ void Game::continueLoadedGame() {
         prologue.markChapterCompleted(3);
         GameState::saveGame(hero, prologue, filename);
 
+        // rozdzial 4 
         std::cout << prologue.getChapterContent(4) << std::endl;
         continueGame();
-        combat1.StartBattleSolo();
-        combat2.StartBattleSolo();
-        prologue.markChapterCompleted(4);
-        GameState::saveGame(hero, prologue, filename);
+        // Hero Companion("Bezimienny", 15, 0, 0, 10, 10, 10, 10, 10, 10);
+        // Goblin goblin("Rzezimizeszek Starszy", "Goblin", 5, 25, 75);
+         //Goblin goblin2("Rzezimizeszek Sredni", "Goblin", 5, 15, 25);
+         //Combat combat1(hero, Companion, goblin);
+        result = combat1.StartBattleSolo();
+        if (result == 0) {
+            std::cout << "SYSTEM: Przegrales walke . Musisz zaczac od nowa." << std::endl;
+            start();
+        }
+        else
+        {
 
-        hero.CheckIfLevelUp();
-        continueGame();
-        std::cout << prologue.getChapterContent(5) << std::endl;
-        continueGame();
-        prologue.markChapterCompleted(5);
-        std::cout << "SYSTEM: Rzut szczescia" << std::endl;
-        if (hero.perceptionTest(2)) {
-            std::cout << "Grzyb okazuje sie jadalny, ale brakuje mu przypraw" << std::endl;
-        }
-        else {
-            std::cout << "Grzyb okazuje sie nie dobry zaczynasz odczuwac dziwne efekty" << std::endl;
-            hero.setHealthPoints(hero.getHealthPoints() - 5);
-            std::cout << "Otrzymujesz minus 5 punktow zdrowia" << std::endl;
-        }
-        std::cout << "SYSTEM : Czas na odpoczynek twoje zdrowie oraz reszta statystyk regeneruja sie" << std::endl;
-        restPoint.restoreEndurance(hero, hero.getFullEndurance());
-        restPoint.restoreHP(hero, hero.getFullHp());
-        restPoint.restoreMana(hero, hero.getFullMana());
-        GameState::saveGame(hero, prologue, filename);
 
-        std::cout << prologue.getChapterContent(6) << std::endl;
-        plecakSklepikarza.addWeapon(new Sword("zmatowialy medalion", 0, 0, 1));
-        plecakSklepikarza.addWeapon(new Bow("Zardzewialy luk", 15, 1, 5));
-        plecakSklepikarza.addPotion(new Potion(Potion::Type::Health, 20, 8));
-        trade.StartTrade(kruk, hero);
-        if (hero.getEquipment().getWeapon(0)->getName() == "zmatowialy medalion" || hero.getEquipment().getWeapon(1)->getName() == "zmatowialy medalion") {
-            std::cout << "Gdy tylko przedmiot znajdzie sie w Twojej dloni, swiat sie przechyla. Przez sekunde jestes gdzies indziej. Krew na dloniach, czyjs krzyk. Obraz zbroi, w ktora wgniatasz ostrze. Czule slowo, szept: “Bracie…”" << std::endl;
-        }
-        prologue.markChapterCompleted(6);
-        GameState::saveGame(hero, prologue, filename);
+            //Combat combat2(hero, Companion, goblin2);
+            result = combat2.StartBattleSolo();
+            if (result == 0) {
+                std::cout << "SYSTEM: Przegrales walke . Musisz zaczac od nowa." << std::endl;
+                start();
+            }
+            else
+            {
 
-        std::cout << prologue.getChapterContent(7) << std::endl;
-        continueGame();
-        int choice;
-        //bool exit = true;
-        while (exit) {
-            std::cout << "SYSTEM: Wybierz co chcesz zrobic" << std::endl;
-            std::cout << "1. Wybierz bron" << std::endl;
-            std::cout << "2. Wyswietl ekwipunek" << std::endl;
-            std::cout << "3. Nic nie rob" << std::endl;
-            std::cin >> choice;
-            switch (choice) {
-            case 1: {
-                restPoint.chooseEquipment(hero);
-                break;
-            }
-            case 2: {
-                hero.getEquipment().displayWeapons();
-                break;
-            }
-            case 3: {
-                std::cout << "Nic nie robisz, odpoczywasz w lesie." << std::endl;
-                exit = false;
-                break;
-            }
-            default: {
-                std::cout << "Nieprawidlowy wybor!" << std::endl;
-                break;
-            }
+
+                combat2.StartBattleSolo();
+                prologue.markChapterCompleted(4);
+                GameState::saveGame(hero, prologue, filename);
+
+                // rozdzial 5
+                hero.CheckIfLevelUp();
+                continueGame();
+                std::cout << prologue.getChapterContent(5) << std::endl;
+                continueGame();
+
+                prologue.markChapterCompleted(5);
+                std::cout << "SYSTEM: Rzut szczescia" << std::endl;
+                if (hero.perceptionTest(2)) {
+                    std::cout << "Grzyb okazuje sie jadalny, ale brakuje mu przypraw" << std::endl;
+                }
+                else {
+                    std::cout << "Grzyb okazuje sie niedobry, zaczynasz odczuwac dziwne efekty" << std::endl;
+                    hero.setHealthPoints(hero.getHealthPoints() - 5);
+                    std::cout << "Otrzymujesz minus 5 punktow zdrowia" << std::endl;
+                }
+                std::cout << "SYSTEM: Czas na odpoczynek - Twoje zdrowie oraz reszta statystyk regeneruja sie" << std::endl;
+                RestPoint restPoint("Odpoczynek w lesie");
+                restPoint.restoreEndurance(hero, hero.getFullEndurance());
+                restPoint.restoreHP(hero, hero.getFullHp());
+                restPoint.restoreMana(hero, hero.getFullMana());
+                GameState::saveGame(hero, prologue, filename);
+
+                // rozdzial 6
+                std::cout << prologue.getChapterContent(6) << std::endl;
+                Equipment plecakSklepikarza;
+                plecakSklepikarza.addWeapon(new Sword("zmatowialy medalion", 0, 0, 1));
+                plecakSklepikarza.addWeapon(new Bow("Zardzewialy luk", 15, 1, 5));
+                plecakSklepikarza.addPotion(new Potion(Potion::Type::Health, 20, 8));
+                NPC kruk("Kruk", plecakSklepikarza);
+                Trade trade;
+                trade.StartTrade(kruk, hero);
+                /*if (hero.getEquipment().getWeapon(0)->getName() == "zmatowialy medalion" || hero.getEquipment().getWeapon(1)->getName() == "zmatowialy medalion") {
+                    std::cout << "Gdy tylko przedmiot znajdzie sie w Twojej dloni, swiat sie przechyla. Przez sekunde jestes gdzies indziej. Krew na dloniach, czyjs krzyk. Obraz zbroi, w ktora wgniatasz ostrze. Czule slowo, szept: 'Bracie...'" << std::endl;
+                }
+                else
+                {
+                    std::cout << "Nie wybrales zadnej broni, moze to byc bledna decyzja." << std::endl;
+                }*/
+                prologue.markChapterCompleted(6);
+                GameState::saveGame(hero, prologue, filename);
+
+                // rozdzial 7
+                std::cout << prologue.getChapterContent(7) << std::endl;
+                continueGame();
+                int choice;
+                bool exit = true;
+                while (exit) {
+                    std::cout << "SYSTEM: Wybierz co chcesz zrobic" << std::endl;
+                    std::cout << "1. Wybierz bron" << std::endl;
+                    std::cout << "2. Wyswietl ekwipunek" << std::endl;
+                    std::cout << "3. Nic nie rob" << std::endl;
+                    std::cin >> choice;
+                    switch (choice) {
+                    case 1: {
+                        restPoint.chooseEquipment(hero);
+                        break;
+                    }
+                    case 2: {
+                        hero.getEquipment().displayWeapons();
+                        break;
+                    }
+                    case 3: {
+                        std::cout << "Nic nie robisz, odpoczywasz w lesie." << std::endl;
+                        exit = false;
+                        break;
+                    }
+                    default:
+                        std::cout << "Nieprawidlowy wybor!" << std::endl;
+                        break;
+                    }
+                }
+
+                continueGame();
+                prologue.markChapterCompleted(7);
+                GameState::saveGame(hero, prologue, filename);
             }
         }
-        continueGame();
-        prologue.markChapterCompleted(7);
-        GameState::saveGame(hero, prologue, filename);
-        break;
     case 2:
         std::cout << prologue.getChapterContent(2) << std::endl;
         continueGame();
@@ -187,77 +224,114 @@ void Game::continueLoadedGame() {
         prologue.markChapterCompleted(3);
         GameState::saveGame(hero, prologue, filename);
 
+        // rozdzial 4 
         std::cout << prologue.getChapterContent(4) << std::endl;
         continueGame();
-        combat1.StartBattleSolo();
-        combat2.StartBattleSolo();
-        prologue.markChapterCompleted(4);
-        GameState::saveGame(hero, prologue, filename);
+        // Hero Companion("Bezimienny", 15, 0, 0, 10, 10, 10, 10, 10, 10);
+        // Goblin goblin("Rzezimizeszek Starszy", "Goblin", 5, 25, 75);
+         //Goblin goblin2("Rzezimizeszek Sredni", "Goblin", 5, 15, 25);
+         //Combat combat1(hero, Companion, goblin);
+        result = combat1.StartBattleSolo();
+        if (result == 0) {
+            std::cout << "SYSTEM: Przegrales walke . Musisz zaczac od nowa." << std::endl;
+            start();
+        }
+        else
+        {
 
-        hero.CheckIfLevelUp();
-        continueGame();
-        std::cout << prologue.getChapterContent(5) << std::endl;
-        continueGame();
-        prologue.markChapterCompleted(5);
-        std::cout << "SYSTEM: Rzut szczescia" << std::endl;
-        if (hero.perceptionTest(2)) {
-            std::cout << "Grzyb okazuje sie jadalny, ale brakuje mu przypraw" << std::endl;
-        }
-        else {
-            std::cout << "Grzyb okazuje sie nie dobry zaczynasz odczuwac dziwne efekty" << std::endl;
-            hero.setHealthPoints(hero.getHealthPoints() - 5);
-            std::cout << "Otrzymujesz minus 5 punktow zdrowia" << std::endl;
-        }
-        std::cout << "SYSTEM : Czas na odpoczynek twoje zdrowie oraz reszta statystyk regeneruja sie" << std::endl;
-        restPoint.restoreEndurance(hero, hero.getFullEndurance());
-        restPoint.restoreHP(hero, hero.getFullHp());
-        restPoint.restoreMana(hero, hero.getFullMana());
-        GameState::saveGame(hero, prologue, filename);
 
-        std::cout << prologue.getChapterContent(6) << std::endl;
-        plecakSklepikarza.addWeapon(new Sword("zmatowialy medalion", 0, 0, 1));
-        plecakSklepikarza.addWeapon(new Bow("Zardzewialy luk", 15, 1, 5));
-        plecakSklepikarza.addPotion(new Potion(Potion::Type::Health, 20, 8));
-        trade.StartTrade(kruk, hero);
-        if (hero.getEquipment().getWeapon(0)->getName() == "zmatowialy medalion" || hero.getEquipment().getWeapon(1)->getName() == "zmatowialy medalion") {
-            std::cout << "Gdy tylko przedmiot znajdzie sie w Twojej dloni, swiat sie przechyla. Przez sekunde jestes gdzies indziej. Krew na dloniach, czyjs krzyk. Obraz zbroi, w ktora wgniatasz ostrze. Czule slowo, szept: “Bracie…”" << std::endl;
-        }
-        prologue.markChapterCompleted(6);
-        GameState::saveGame(hero, prologue, filename);
+            //Combat combat2(hero, Companion, goblin2);
+            result = combat2.StartBattleSolo();
+            if (result == 0) {
+                std::cout << "SYSTEM: Przegrales walke . Musisz zaczac od nowa." << std::endl;
+                start();
+            }
+            else
+            {
 
-        std::cout << prologue.getChapterContent(7) << std::endl;
-        continueGame();
-        //int choice;
-        //bool exit = true;
-        while (exit) {
-            std::cout << "SYSTEM: Wybierz co chcesz zrobic" << std::endl;
-            std::cout << "1. Wybierz bron" << std::endl;
-            std::cout << "2. Wyswietl ekwipunek" << std::endl;
-            std::cout << "3. Nic nie rob" << std::endl;
-            std::cin >> choice;
-            switch (choice) {
-            case 1: {
-                restPoint.chooseEquipment(hero);
-                break;
-            }
-            case 2: {
-                hero.getEquipment().displayWeapons();
-                break;
-            }
-            case 3: {
-                std::cout << "Nic nie robisz, odpoczywasz w lesie." << std::endl;
-                exit = false;
-                break;
-            }
-            default: {
-                std::cout << "Nieprawidlowy wybor!" << std::endl;
-                break;
-            }
+
+                combat2.StartBattleSolo();
+                prologue.markChapterCompleted(4);
+                GameState::saveGame(hero, prologue, filename);
+
+                // rozdzial 5
+                hero.CheckIfLevelUp();
+                continueGame();
+                std::cout << prologue.getChapterContent(5) << std::endl;
+                continueGame();
+
+                prologue.markChapterCompleted(5);
+                std::cout << "SYSTEM: Rzut szczescia" << std::endl;
+                if (hero.perceptionTest(2)) {
+                    std::cout << "Grzyb okazuje sie jadalny, ale brakuje mu przypraw" << std::endl;
+                }
+                else {
+                    std::cout << "Grzyb okazuje sie niedobry, zaczynasz odczuwac dziwne efekty" << std::endl;
+                    hero.setHealthPoints(hero.getHealthPoints() - 5);
+                    std::cout << "Otrzymujesz minus 5 punktow zdrowia" << std::endl;
+                }
+                std::cout << "SYSTEM: Czas na odpoczynek - Twoje zdrowie oraz reszta statystyk regeneruja sie" << std::endl;
+                RestPoint restPoint("Odpoczynek w lesie");
+                restPoint.restoreEndurance(hero, hero.getFullEndurance());
+                restPoint.restoreHP(hero, hero.getFullHp());
+                restPoint.restoreMana(hero, hero.getFullMana());
+                GameState::saveGame(hero, prologue, filename);
+
+                // rozdzial 6
+                std::cout << prologue.getChapterContent(6) << std::endl;
+                Equipment plecakSklepikarza;
+                plecakSklepikarza.addWeapon(new Sword("zmatowialy medalion", 0, 0, 1));
+                plecakSklepikarza.addWeapon(new Bow("Zardzewialy luk", 15, 1, 5));
+                plecakSklepikarza.addPotion(new Potion(Potion::Type::Health, 20, 8));
+                NPC kruk("Kruk", plecakSklepikarza);
+                Trade trade;
+                trade.StartTrade(kruk, hero);
+                /*if (hero.getEquipment().getWeapon(0)->getName() == "zmatowialy medalion" || hero.getEquipment().getWeapon(1)->getName() == "zmatowialy medalion") {
+                    std::cout << "Gdy tylko przedmiot znajdzie sie w Twojej dloni, swiat sie przechyla. Przez sekunde jestes gdzies indziej. Krew na dloniach, czyjs krzyk. Obraz zbroi, w ktora wgniatasz ostrze. Czule slowo, szept: 'Bracie...'" << std::endl;
+                }
+                else
+                {
+                    std::cout << "Nie wybrales zadnej broni, moze to byc bledna decyzja." << std::endl;
+                }*/
+                prologue.markChapterCompleted(6);
+                GameState::saveGame(hero, prologue, filename);
+
+                // rozdzial 7
+                std::cout << prologue.getChapterContent(7) << std::endl;
+                continueGame();
+                int choice;
+                bool exit = true;
+                while (exit) {
+                    std::cout << "SYSTEM: Wybierz co chcesz zrobic" << std::endl;
+                    std::cout << "1. Wybierz bron" << std::endl;
+                    std::cout << "2. Wyswietl ekwipunek" << std::endl;
+                    std::cout << "3. Nic nie rob" << std::endl;
+                    std::cin >> choice;
+                    switch (choice) {
+                    case 1: {
+                        restPoint.chooseEquipment(hero);
+                        break;
+                    }
+                    case 2: {
+                        hero.getEquipment().displayWeapons();
+                        break;
+                    }
+                    case 3: {
+                        std::cout << "Nic nie robisz, odpoczywasz w lesie." << std::endl;
+                        exit = false;
+                        break;
+                    }
+                    default:
+                        std::cout << "Nieprawidlowy wybor!" << std::endl;
+                        break;
+                    }
+                }
+
+                continueGame();
+                prologue.markChapterCompleted(7);
+                GameState::saveGame(hero, prologue, filename);
             }
         }
-        continueGame();
-        prologue.markChapterCompleted(7);
-        GameState::saveGame(hero, prologue, filename);
         break;
     case 3:
         std::cout << "SYSTEM: ZADANIE ZAKTUALIZOWANE - “DOSTAN SIE DO MIASTA”" << std::endl;
@@ -273,151 +347,224 @@ void Game::continueLoadedGame() {
         prologue.markChapterCompleted(3);
         GameState::saveGame(hero, prologue, filename);
 
+        // rozdzial 4 
         std::cout << prologue.getChapterContent(4) << std::endl;
         continueGame();
-        combat1.StartBattleSolo();
-        combat2.StartBattleSolo();
-        prologue.markChapterCompleted(4);
-        GameState::saveGame(hero, prologue, filename);
+        // Hero Companion("Bezimienny", 15, 0, 0, 10, 10, 10, 10, 10, 10);
+        // Goblin goblin("Rzezimizeszek Starszy", "Goblin", 5, 25, 75);
+         //Goblin goblin2("Rzezimizeszek Sredni", "Goblin", 5, 15, 25);
+         //Combat combat1(hero, Companion, goblin);
+        result = combat1.StartBattleSolo();
+        if (result == 0) {
+            std::cout << "SYSTEM: Przegrales walke . Musisz zaczac od nowa." << std::endl;
+            start();
+        }
+        else
+        {
 
-        hero.CheckIfLevelUp();
-        continueGame();
-        std::cout << prologue.getChapterContent(5) << std::endl;
-        continueGame();
-        prologue.markChapterCompleted(5);
-        std::cout << "SYSTEM: Rzut szczescia" << std::endl;
-        if (hero.perceptionTest(2)) {
-            std::cout << "Grzyb okazuje sie jadalny, ale brakuje mu przypraw" << std::endl;
-        }
-        else {
-            std::cout << "Grzyb okazuje sie nie dobry zaczynasz odczuwac dziwne efekty" << std::endl;
-            hero.setHealthPoints(hero.getHealthPoints() - 5);
-            std::cout << "Otrzymujesz minus 5 punktow zdrowia" << std::endl;
-        }
-        std::cout << "SYSTEM : Czas na odpoczynek twoje zdrowie oraz reszta statystyk regeneruja sie" << std::endl;
-        restPoint.restoreEndurance(hero, hero.getFullEndurance());
-        restPoint.restoreHP(hero, hero.getFullHp());
-        restPoint.restoreMana(hero, hero.getFullMana());
-        GameState::saveGame(hero, prologue, filename);
 
-        std::cout << prologue.getChapterContent(6) << std::endl;
-        plecakSklepikarza.addWeapon(new Sword("zmatowialy medalion", 0, 0, 1));
-        plecakSklepikarza.addWeapon(new Bow("Zardzewialy luk", 15, 1, 5));
-        plecakSklepikarza.addPotion(new Potion(Potion::Type::Health, 20, 8));
-        trade.StartTrade(kruk, hero);
-        if (hero.getEquipment().getWeapon(0)->getName() == "zmatowialy medalion" || hero.getEquipment().getWeapon(1)->getName() == "zmatowialy medalion") {
-            std::cout << "Gdy tylko przedmiot znajdzie sie w Twojej dloni, swiat sie przechyla. Przez sekunde jestes gdzies indziej. Krew na dloniach, czyjs krzyk. Obraz zbroi, w ktora wgniatasz ostrze. Czule slowo, szept: “Bracie…”" << std::endl;
-        }
-        prologue.markChapterCompleted(6);
-        GameState::saveGame(hero, prologue, filename);
+            //Combat combat2(hero, Companion, goblin2);
+            result = combat2.StartBattleSolo();
+            if (result == 0) {
+                std::cout << "SYSTEM: Przegrales walke . Musisz zaczac od nowa." << std::endl;
+                start();
+            }
+            else
+            {
 
-        std::cout << prologue.getChapterContent(7) << std::endl;
-        continueGame();
-        //int choice;
-       // bool exit = true;
-        while (exit) {
-            std::cout << "SYSTEM: Wybierz co chcesz zrobic" << std::endl;
-            std::cout << "1. Wybierz bron" << std::endl;
-            std::cout << "2. Wyswietl ekwipunek" << std::endl;
-            std::cout << "3. Nic nie rob" << std::endl;
-            std::cin >> choice;
-            switch (choice) {
-            case 1: {
-                restPoint.chooseEquipment(hero);
-                break;
-            }
-            case 2: {
-                hero.getEquipment().displayWeapons();
-                break;
-            }
-            case 3: {
-                std::cout << "Nic nie robisz, odpoczywasz w lesie." << std::endl;
-                exit = false;
-                break;
-            }
-            default: {
-                std::cout << "Nieprawidlowy wybor!" << std::endl;
-                break;
-            }
+
+                combat2.StartBattleSolo();
+                prologue.markChapterCompleted(4);
+                GameState::saveGame(hero, prologue, filename);
+
+                // rozdzial 5
+                hero.CheckIfLevelUp();
+                continueGame();
+                std::cout << prologue.getChapterContent(5) << std::endl;
+                continueGame();
+
+                prologue.markChapterCompleted(5);
+                std::cout << "SYSTEM: Rzut szczescia" << std::endl;
+                if (hero.perceptionTest(2)) {
+                    std::cout << "Grzyb okazuje sie jadalny, ale brakuje mu przypraw" << std::endl;
+                }
+                else {
+                    std::cout << "Grzyb okazuje sie niedobry, zaczynasz odczuwac dziwne efekty" << std::endl;
+                    hero.setHealthPoints(hero.getHealthPoints() - 5);
+                    std::cout << "Otrzymujesz minus 5 punktow zdrowia" << std::endl;
+                }
+                std::cout << "SYSTEM: Czas na odpoczynek - Twoje zdrowie oraz reszta statystyk regeneruja sie" << std::endl;
+                RestPoint restPoint("Odpoczynek w lesie");
+                restPoint.restoreEndurance(hero, hero.getFullEndurance());
+                restPoint.restoreHP(hero, hero.getFullHp());
+                restPoint.restoreMana(hero, hero.getFullMana());
+                GameState::saveGame(hero, prologue, filename);
+
+                // rozdzial 6
+                std::cout << prologue.getChapterContent(6) << std::endl;
+                Equipment plecakSklepikarza;
+                plecakSklepikarza.addWeapon(new Sword("zmatowialy medalion", 0, 0, 1));
+                plecakSklepikarza.addWeapon(new Bow("Zardzewialy luk", 15, 1, 5));
+                plecakSklepikarza.addPotion(new Potion(Potion::Type::Health, 20, 8));
+                NPC kruk("Kruk", plecakSklepikarza);
+                Trade trade;
+                trade.StartTrade(kruk, hero);
+                /*if (hero.getEquipment().getWeapon(0)->getName() == "zmatowialy medalion" || hero.getEquipment().getWeapon(1)->getName() == "zmatowialy medalion") {
+                    std::cout << "Gdy tylko przedmiot znajdzie sie w Twojej dloni, swiat sie przechyla. Przez sekunde jestes gdzies indziej. Krew na dloniach, czyjs krzyk. Obraz zbroi, w ktora wgniatasz ostrze. Czule slowo, szept: 'Bracie...'" << std::endl;
+                }
+                else
+                {
+                    std::cout << "Nie wybrales zadnej broni, moze to byc bledna decyzja." << std::endl;
+                }*/
+                prologue.markChapterCompleted(6);
+                GameState::saveGame(hero, prologue, filename);
+
+                // rozdzial 7
+                std::cout << prologue.getChapterContent(7) << std::endl;
+                continueGame();
+                int choice;
+                bool exit = true;
+                while (exit) {
+                    std::cout << "SYSTEM: Wybierz co chcesz zrobic" << std::endl;
+                    std::cout << "1. Wybierz bron" << std::endl;
+                    std::cout << "2. Wyswietl ekwipunek" << std::endl;
+                    std::cout << "3. Nic nie rob" << std::endl;
+                    std::cin >> choice;
+                    switch (choice) {
+                    case 1: {
+                        restPoint.chooseEquipment(hero);
+                        break;
+                    }
+                    case 2: {
+                        hero.getEquipment().displayWeapons();
+                        break;
+                    }
+                    case 3: {
+                        std::cout << "Nic nie robisz, odpoczywasz w lesie." << std::endl;
+                        exit = false;
+                        break;
+                    }
+                    default:
+                        std::cout << "Nieprawidlowy wybor!" << std::endl;
+                        break;
+                    }
+                }
+
+                continueGame();
+                prologue.markChapterCompleted(7);
+                GameState::saveGame(hero, prologue, filename);
             }
         }
-        continueGame();
-        prologue.markChapterCompleted(7);
-        GameState::saveGame(hero, prologue, filename);
         break;
     case 4:
+        // rozdzial 4 
         std::cout << prologue.getChapterContent(4) << std::endl;
         continueGame();
-        combat1.StartBattleSolo();
-        combat2.StartBattleSolo();
-        prologue.markChapterCompleted(4);
-        GameState::saveGame(hero, prologue, filename);
+       // Hero Companion("Bezimienny", 15, 0, 0, 10, 10, 10, 10, 10, 10);
+       // Goblin goblin("Rzezimizeszek Starszy", "Goblin", 5, 25, 75);
+        //Goblin goblin2("Rzezimizeszek Sredni", "Goblin", 5, 15, 25);
+        //Combat combat1(hero, Companion, goblin);
+        result = combat1.StartBattleSolo();
+        if (result == 0) {
+            std::cout << "SYSTEM: Przegrales walke . Musisz zaczac od nowa." << std::endl;
+            start();
+        }
+        else
+        {
 
-        hero.CheckIfLevelUp();
-        continueGame();
-        std::cout << prologue.getChapterContent(5) << std::endl;
-        continueGame();
-        prologue.markChapterCompleted(5);
-        std::cout << "SYSTEM: Rzut szczescia" << std::endl;
-        if (hero.perceptionTest(2)) {
-            std::cout << "Grzyb okazuje sie jadalny, ale brakuje mu przypraw" << std::endl;
-        }
-        else {
-            std::cout << "Grzyb okazuje sie nie dobry zaczynasz odczuwac dziwne efekty" << std::endl;
-            hero.setHealthPoints(hero.getHealthPoints() - 5);
-            std::cout << "Otrzymujesz minus 5 punktow zdrowia" << std::endl;
-        }
-        std::cout << "SYSTEM : Czas na odpoczynek twoje zdrowie oraz reszta statystyk regeneruja sie" << std::endl;
-        restPoint.restoreEndurance(hero, hero.getFullEndurance());
-        restPoint.restoreHP(hero, hero.getFullHp());
-        restPoint.restoreMana(hero, hero.getFullMana());
-        GameState::saveGame(hero, prologue, filename);
 
-        std::cout << prologue.getChapterContent(6) << std::endl;
-        plecakSklepikarza.addWeapon(new Sword("zmatowialy medalion", 0, 0, 1));
-        plecakSklepikarza.addWeapon(new Bow("Zardzewialy luk", 15, 1, 5));
-        plecakSklepikarza.addPotion(new Potion(Potion::Type::Health, 20, 8));
-        trade.StartTrade(kruk, hero);
-        if (hero.getEquipment().getWeapon(0)->getName() == "zmatowialy medalion" || hero.getEquipment().getWeapon(1)->getName() == "zmatowialy medalion") {
-            std::cout << "Gdy tylko przedmiot znajdzie sie w Twojej dloni, swiat sie przechyla. Przez sekunde jestes gdzies indziej. Krew na dloniach, czyjs krzyk. Obraz zbroi, w ktora wgniatasz ostrze. Czule slowo, szept: “Bracie…”" << std::endl;
-        }
-        prologue.markChapterCompleted(6);
-        GameState::saveGame(hero, prologue, filename);
+            //Combat combat2(hero, Companion, goblin2);
+            result = combat2.StartBattleSolo();
+            if (result == 0) {
+                std::cout << "SYSTEM: Przegrales walke . Musisz zaczac od nowa." << std::endl;
+                start();
+            }
+            else
+            {
 
-        std::cout << prologue.getChapterContent(7) << std::endl;
-        continueGame();
-        //int choice;
-        //bool exit = true;
-        while (exit) {
-            std::cout << "SYSTEM: Wybierz co chcesz zrobic" << std::endl;
-            std::cout << "1. Wybierz bron" << std::endl;
-            std::cout << "2. Wyswietl ekwipunek" << std::endl;
-            std::cout << "3. Nic nie rob" << std::endl;
-            std::cin >> choice;
-            switch (choice) {
-            case 1: {
-                restPoint.chooseEquipment(hero);
-                break;
-            }
-            case 2: {
-                hero.getEquipment().displayWeapons();
-                break;
-            }
-            case 3: {
-                std::cout << "Nic nie robisz, odpoczywasz w lesie." << std::endl;
-                exit = false;
-                break;
-            }
-            default: {
-                std::cout << "Nieprawidlowy wybor!" << std::endl;
-                break;
-            }
+
+                combat2.StartBattleSolo();
+                prologue.markChapterCompleted(4);
+                GameState::saveGame(hero, prologue, filename);
+
+                // rozdzial 5
+                hero.CheckIfLevelUp();
+                continueGame();
+                std::cout << prologue.getChapterContent(5) << std::endl;
+                continueGame();
+
+                prologue.markChapterCompleted(5);
+                std::cout << "SYSTEM: Rzut szczescia" << std::endl;
+                if (hero.perceptionTest(2)) {
+                    std::cout << "Grzyb okazuje sie jadalny, ale brakuje mu przypraw" << std::endl;
+                }
+                else {
+                    std::cout << "Grzyb okazuje sie niedobry, zaczynasz odczuwac dziwne efekty" << std::endl;
+                    hero.setHealthPoints(hero.getHealthPoints() - 5);
+                    std::cout << "Otrzymujesz minus 5 punktow zdrowia" << std::endl;
+                }
+                std::cout << "SYSTEM: Czas na odpoczynek - Twoje zdrowie oraz reszta statystyk regeneruja sie" << std::endl;
+                RestPoint restPoint("Odpoczynek w lesie");
+                restPoint.restoreEndurance(hero, hero.getFullEndurance());
+                restPoint.restoreHP(hero, hero.getFullHp());
+                restPoint.restoreMana(hero, hero.getFullMana());
+                GameState::saveGame(hero, prologue, filename);
+
+                // rozdzial 6
+                std::cout << prologue.getChapterContent(6) << std::endl;
+                Equipment plecakSklepikarza;
+                plecakSklepikarza.addWeapon(new Sword("zmatowialy medalion", 0, 0, 1));
+                plecakSklepikarza.addWeapon(new Bow("Zardzewialy luk", 15, 1, 5));
+                plecakSklepikarza.addPotion(new Potion(Potion::Type::Health, 20, 8));
+                NPC kruk("Kruk", plecakSklepikarza);
+                Trade trade;
+                trade.StartTrade(kruk, hero);
+                /*if (hero.getEquipment().getWeapon(0)->getName() == "zmatowialy medalion" || hero.getEquipment().getWeapon(1)->getName() == "zmatowialy medalion") {
+                    std::cout << "Gdy tylko przedmiot znajdzie sie w Twojej dloni, swiat sie przechyla. Przez sekunde jestes gdzies indziej. Krew na dloniach, czyjs krzyk. Obraz zbroi, w ktora wgniatasz ostrze. Czule slowo, szept: 'Bracie...'" << std::endl;
+                }
+                else
+                {
+                    std::cout << "Nie wybrales zadnej broni, moze to byc bledna decyzja." << std::endl;
+                }*/
+                prologue.markChapterCompleted(6);
+                GameState::saveGame(hero, prologue, filename);
+
+                // rozdzial 7
+                std::cout << prologue.getChapterContent(7) << std::endl;
+                continueGame();
+                int choice;
+                bool exit = true;
+                while (exit) {
+                    std::cout << "SYSTEM: Wybierz co chcesz zrobic" << std::endl;
+                    std::cout << "1. Wybierz bron" << std::endl;
+                    std::cout << "2. Wyswietl ekwipunek" << std::endl;
+                    std::cout << "3. Nic nie rob" << std::endl;
+                    std::cin >> choice;
+                    switch (choice) {
+                    case 1: {
+                        restPoint.chooseEquipment(hero);
+                        break;
+                    }
+                    case 2: {
+                        hero.getEquipment().displayWeapons();
+                        break;
+                    }
+                    case 3: {
+                        std::cout << "Nic nie robisz, odpoczywasz w lesie." << std::endl;
+                        exit = false;
+                        break;
+                    }
+                    default:
+                        std::cout << "Nieprawidlowy wybor!" << std::endl;
+                        break;
+                    }
+                }
+
+                continueGame();
+                prologue.markChapterCompleted(7);
+                GameState::saveGame(hero, prologue, filename);
             }
         }
-        continueGame();
-        prologue.markChapterCompleted(7);
-        GameState::saveGame(hero, prologue, filename);
-        break;
     case 5:
         hero.CheckIfLevelUp();
         continueGame();
@@ -606,83 +753,106 @@ void Game::start() {
     Goblin goblin("Rzezimizeszek Starszy", "Goblin", 5, 25, 75);
     Goblin goblin2("Rzezimizeszek Sredni", "Goblin", 5, 15, 25);
     Combat combat1(hero, Companion, goblin);
-    combat1.StartBattleSolo();
-    Combat combat2(hero, Companion, goblin2);
-    combat2.StartBattleSolo();
-    prologue.markChapterCompleted(4);
-    GameState::saveGame(hero, prologue, filename);
-
-    // rozdzial 5
-    hero.CheckIfLevelUp();
-    continueGame();
-    std::cout << prologue.getChapterContent(5) << std::endl;
-    continueGame();
-
-    prologue.markChapterCompleted(5);
-    std::cout << "SYSTEM: Rzut szczescia" << std::endl;
-    if (hero.perceptionTest(2)) {
-        std::cout << "Grzyb okazuje sie jadalny, ale brakuje mu przypraw" << std::endl;
-    }
-    else {
-        std::cout << "Grzyb okazuje sie niedobry, zaczynasz odczuwac dziwne efekty" << std::endl;
-        hero.setHealthPoints(hero.getHealthPoints() - 5);
-        std::cout << "Otrzymujesz minus 5 punktow zdrowia" << std::endl;
-    }
-    std::cout << "SYSTEM: Czas na odpoczynek - Twoje zdrowie oraz reszta statystyk regeneruja sie" << std::endl;
-    RestPoint restPoint("Odpoczynek w lesie");
-    restPoint.restoreEndurance(hero, hero.getFullEndurance());
-    restPoint.restoreHP(hero, hero.getFullHp());
-    restPoint.restoreMana(hero, hero.getFullMana());
-    GameState::saveGame(hero, prologue, filename);
-
-    // rozdzial 6
-    std::cout << prologue.getChapterContent(6) << std::endl;
-    Equipment plecakSklepikarza;
-    plecakSklepikarza.addWeapon(new Sword("zmatowialy medalion", 0, 0, 1));
-    plecakSklepikarza.addWeapon(new Bow("Zardzewialy luk", 15, 1, 5));
-    plecakSklepikarza.addPotion(new Potion(Potion::Type::Health, 20, 8));
-    NPC kruk("Kruk", plecakSklepikarza);
-    Trade trade;
-    trade.StartTrade(kruk, hero);
-    if (hero.getEquipment().getWeapon(0)->getName() == "zmatowialy medalion" || hero.getEquipment().getWeapon(1)->getName() == "zmatowialy medalion") {
-        std::cout << "Gdy tylko przedmiot znajdzie sie w Twojej dloni, swiat sie przechyla. Przez sekunde jestes gdzies indziej. Krew na dloniach, czyjs krzyk. Obraz zbroi, w ktora wgniatasz ostrze. Czule slowo, szept: 'Bracie...'" << std::endl;
-    }
-    prologue.markChapterCompleted(6);
-    GameState::saveGame(hero, prologue, filename);
-
-    // rozdzial 7
-    std::cout << prologue.getChapterContent(7) << std::endl;
-    continueGame();
-    int choice;
-    bool exit = true;
-    while (exit) {
-        std::cout << "SYSTEM: Wybierz co chcesz zrobic" << std::endl;
-        std::cout << "1. Wybierz bron" << std::endl;
-        std::cout << "2. Wyswietl ekwipunek" << std::endl;
-        std::cout << "3. Nic nie rob" << std::endl;
-        std::cin >> choice;
-        switch (choice) {
-        case 1: {
-            restPoint.chooseEquipment(hero);
-            break;
+    int result = combat1.StartBattleSolo();
+        if (result == 0) {
+            std::cout << "SYSTEM: Przegrales walke . Musisz zaczac od nowa." << std::endl;
+            start();
         }
-        case 2: {
-            hero.getEquipment().displayWeapons();
-            break;
-        }
-        case 3: {
-            std::cout << "Nic nie robisz, odpoczywasz w lesie." << std::endl;
-            exit = false;
-            break;
-        }
-        default:
-            std::cout << "Nieprawidlowy wybor!" << std::endl;
-            break;
-        }
-    }
+        else
+        {
 
-    continueGame();
-    prologue.markChapterCompleted(7);
-    GameState::saveGame(hero, prologue, filename);
+
+            Combat combat2(hero, Companion, goblin2);
+			result = combat2.StartBattleSolo();
+			if (result == 0) {
+				std::cout << "SYSTEM: Przegrales walke . Musisz zaczac od nowa." << std::endl;
+				start();
+			}
+            else
+            {
+
+
+                combat2.StartBattleSolo();
+                prologue.markChapterCompleted(4);
+                GameState::saveGame(hero, prologue, filename);
+
+                // rozdzial 5
+                hero.CheckIfLevelUp();
+                continueGame();
+                std::cout << prologue.getChapterContent(5) << std::endl;
+                continueGame();
+
+                prologue.markChapterCompleted(5);
+                std::cout << "SYSTEM: Rzut szczescia" << std::endl;
+                if (hero.perceptionTest(2)) {
+                    std::cout << "Grzyb okazuje sie jadalny, ale brakuje mu przypraw" << std::endl;
+                }
+                else {
+                    std::cout << "Grzyb okazuje sie niedobry, zaczynasz odczuwac dziwne efekty" << std::endl;
+                    hero.setHealthPoints(hero.getHealthPoints() - 5);
+                    std::cout << "Otrzymujesz minus 5 punktow zdrowia" << std::endl;
+                }
+                std::cout << "SYSTEM: Czas na odpoczynek - Twoje zdrowie oraz reszta statystyk regeneruja sie" << std::endl;
+                RestPoint restPoint("Odpoczynek w lesie");
+                restPoint.restoreEndurance(hero, hero.getFullEndurance());
+                restPoint.restoreHP(hero, hero.getFullHp());
+                restPoint.restoreMana(hero, hero.getFullMana());
+                GameState::saveGame(hero, prologue, filename);
+
+                // rozdzial 6
+                std::cout << prologue.getChapterContent(6) << std::endl;
+                Equipment plecakSklepikarza;
+                plecakSklepikarza.addWeapon(new Sword("zmatowialy medalion", 0, 0, 1));
+                plecakSklepikarza.addWeapon(new Bow("Zardzewialy luk", 15, 1, 5));
+                plecakSklepikarza.addPotion(new Potion(Potion::Type::Health, 20, 8));
+                NPC kruk("Kruk", plecakSklepikarza);
+                Trade trade;
+                trade.StartTrade(kruk, hero);
+                /*if (hero.getEquipment().getWeapon(0)->getName() == "zmatowialy medalion" || hero.getEquipment().getWeapon(1)->getName() == "zmatowialy medalion") {
+                    std::cout << "Gdy tylko przedmiot znajdzie sie w Twojej dloni, swiat sie przechyla. Przez sekunde jestes gdzies indziej. Krew na dloniach, czyjs krzyk. Obraz zbroi, w ktora wgniatasz ostrze. Czule slowo, szept: 'Bracie...'" << std::endl;
+                }
+                else
+                {
+                    std::cout << "Nie wybrales zadnej broni, moze to byc bledna decyzja." << std::endl;
+                }*/
+                prologue.markChapterCompleted(6);
+                GameState::saveGame(hero, prologue, filename);
+
+                // rozdzial 7
+                std::cout << prologue.getChapterContent(7) << std::endl;
+                continueGame();
+                int choice;
+                bool exit = true;
+                while (exit) {
+                    std::cout << "SYSTEM: Wybierz co chcesz zrobic" << std::endl;
+                    std::cout << "1. Wybierz bron" << std::endl;
+                    std::cout << "2. Wyswietl ekwipunek" << std::endl;
+                    std::cout << "3. Nic nie rob" << std::endl;
+                    std::cin >> choice;
+                    switch (choice) {
+                    case 1: {
+                        restPoint.chooseEquipment(hero);
+                        break;
+                    }
+                    case 2: {
+                        hero.getEquipment().displayWeapons();
+                        break;
+                    }
+                    case 3: {
+                        std::cout << "Nic nie robisz, odpoczywasz w lesie." << std::endl;
+                        exit = false;
+                        break;
+                    }
+                    default:
+                        std::cout << "Nieprawidlowy wybor!" << std::endl;
+                        break;
+                    }
+                }
+
+                continueGame();
+                prologue.markChapterCompleted(7);
+                GameState::saveGame(hero, prologue, filename);
+            }
+        }
 }
 

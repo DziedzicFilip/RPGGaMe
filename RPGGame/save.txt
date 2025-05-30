@@ -1,22 +1,18 @@
-Name 1
-HealthPoints 15
+Name Fad
+HealthPoints 10
 Level 0
 XP 0
 Strength 5
 Intelligence 5
 Dexterity 5
 Luck 5
-Endurance -1
+Endurance 5
 Mana 5
 EquipmentStart
-WeaponsCount 1
+WeaponsCount 2
 Weapon 0 Sword 20 10 10
+Weapon 1 Sword 20 10 10
 PotionsCount 0
 EquipmentEnd
 StoryProgress
-ChapterCompleted 1
-ChapterCompleted 2
-ChapterCompleted 3
-ChapterCompleted 4
-ChapterCompleted 5
 EndStory

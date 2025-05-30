@@ -123,7 +123,7 @@ void Combat::CompaionionTurn(Hero& CompanionHero, Enemy& enemy) {
     }
 }
 
-void Combat::StartBattle() {
+int Combat::StartBattle() {
     std::cout << "Rozpoczynasz walke z " + enemy.getName() + "!\n";
     int random = rand() % 20 + 1;
     while (mainHero.getHealthPoints() > 0 && enemy.getHealthPoints() > 0) {
@@ -131,6 +131,7 @@ void Combat::StartBattle() {
         std::cout << enemy.getName() + " HP: " << enemy.getHealthPoints() << "\n";
         if (enemy.getHealthPoints() <= 0) {
             std::cout << "Wygrales walke!\n";
+			return 1;
             mainHero.setXP(mainHero.getXP() + enemy.getXP());
             std::cout << "Zdobywasz " << enemy.getXP() << " punktow doswiadczenia!\n";
             std::cout << enemy.getName() + " mial 5 golda!\n";
@@ -142,6 +143,7 @@ void Combat::StartBattle() {
         std::cout << "Twoje HP: " << mainHero.getHealthPoints() << "\n";
         if (mainHero.getHealthPoints() <= 0) {
             std::cout << "Przegrales walke!\n";
+            return 0;
             break;
         }
 
@@ -149,6 +151,7 @@ void Combat::StartBattle() {
         std::cout << enemy.getName() + " HP: " << enemy.getHealthPoints() << "\n";
         if (enemy.getHealthPoints() <= 0) {
             std::cout << "Wygrales walke!\n";
+            return 1;
             mainHero.setXP(mainHero.getXP() + enemy.getXP());
             std::cout << "Zdobywasz " << enemy.getXP() << " punktow doswiadczenia!\n";
             if (random > 15) {
@@ -158,9 +161,10 @@ void Combat::StartBattle() {
             break;
         }
     }
+    return 1;
 }
 
-void Combat::StartBattleSolo() {
+int Combat::StartBattleSolo() {
     std::cout << "Rozpoczynasz walke z " + enemy.getName() + "!\n";
     int random = rand() % 20 + 1;
     while (mainHero.getHealthPoints() > 0 && enemy.getHealthPoints() > 0) {
@@ -168,6 +172,7 @@ void Combat::StartBattleSolo() {
         std::cout << enemy.getName() + " HP: " << enemy.getHealthPoints() << "\n";
         if (enemy.getHealthPoints() <= 0) {
             std::cout << "Wygrales walke!\n";
+            return 1;
             mainHero.setXP(mainHero.getXP() + enemy.getXP());
             std::cout << "Zdobywasz " << enemy.getXP() << " punktow doswiadczenia!\n";
             std::cout << enemy.getName() + " mial 5 golda!\n";
@@ -179,7 +184,9 @@ void Combat::StartBattleSolo() {
         std::cout << "Twoje HP: " << mainHero.getHealthPoints() << "\n";
         if (mainHero.getHealthPoints() <= 0) {
             std::cout << "Przegrales walke!\n";
+            return 0;
             break;
         }
     }
+    return 1;
 }

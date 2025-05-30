@@ -48,7 +48,7 @@ void Hero::ignis(Enemy& enemy, Hero& hero) {
 }
 
 void Hero::heal(Hero& hero) {
-    // Implementacja pozniej
+	hero.setHealthPoints(hero.getHealthPoints() + (intelligence * 0.5));
 }
 
 void Hero::waterBomb(Enemy& enemy, Hero& hero) {

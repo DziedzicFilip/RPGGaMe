@@ -7,11 +7,12 @@ class Combat {
 public:
     Combat(Hero& mainHero, Hero& CompanionHero, Enemy& enemy);
 	
-    void StartBattle();
+    int StartBattle();
     void chooseAction(Hero& hero, Enemy& enemy);
 	void enemyTurn(Enemy& enemy, Hero& hero);
 	void CompaionionTurn(Hero& CompanionHero, Enemy& enemy);
-    void StartBattleSolo();
+    int StartBattleSolo();
+	bool result(bool result);
 private:
     Hero& mainHero;
     Hero& CompanionHero;
