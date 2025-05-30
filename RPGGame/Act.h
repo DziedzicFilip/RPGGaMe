@@ -20,4 +20,5 @@ public:
     bool isChapterCompleted(int id) const;
     void printAllChaptersStatus() const;
     int getFirstIncompleteChapter() const;
+    int getLastCompletedChapter() const;
 };

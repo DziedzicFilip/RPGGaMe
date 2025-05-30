@@ -191,4 +191,31 @@ bool GameState::shouldLoadGame(const std::string& filename) {
         return false;
     }
 }
+int GameState::getNextChapterFromSave(const std::string& filename) {
+    std::ifstream file(filename);
+    if (!file.is_open()) {
+        return 1;
+    }
+
+    std::string line;
+    int lastChapter = 0;
+
+    while (std::getline(file, line)) {
+        if (line.find("ChapterCompleted") == 0) {
+            size_t spacePos = line.find(' ');
+            if (spacePos != std::string::npos) {
+                std::string numberStr = line.substr(spacePos + 1);
+                try {
+                    lastChapter = std::stoi(numberStr);
+                }
+                catch (...) {
+                    // ignoruj b³¹d konwersji
+                }
+            }
+        }
+    }
+
+    file.close();
+    return lastChapter + 1; // nastêpny do rozegrania
+}
 

@@ -33,21 +33,36 @@ void Game::createNewGame() {
 }
 
 void Game::continueLoadedGame() {
-    int chapterToPlay = act.getFirstIncompleteChapter();
-
-    if (chapterToPlay > 0) {
-        std::cout << "Kontynuujesz grê od rozdzia³u " << chapterToPlay << ".\n";
-        std::cout << act.getChapterContent(chapterToPlay) << "\n";
-
-        act.markChapterCompleted(chapterToPlay);
-
-        // Zapis po ukoñczeniu rozdzia³u
-        GameState::saveGame(hero, act, filename);
+    // Wczytaj dane z pliku
+    if (!GameState::loadGame(hero, act, filename)) {
+        std::cerr << "Nie uda³o siê wczytaæ zapisu gry. Tworzê now¹ grê...\n";
+        start();
+        return;
     }
-    else {
+
+    // Pobierz ostatni ukoñczony rozdzia³
+    int lastCompletedChapter = act.getLastCompletedChapter(); 
+    int nextChapter = GameState::getNextChapterFromSave(filename);
+
+    std::cout << "Kontynuujesz grê od rozdzia³u " << nextChapter << ".\n";
+    Act prologue;
+    Hero Companion("Bezimienny", 15, 0, 0, 10, 10, 10, 10, 10, 10);
+    Goblin goblin("Rzezimieszek Starszy", "Goblin", 5, 25, 75);
+    Goblin goblin2("Rzezimieszek Œredni", "Goblin", 5, 15, 25);
+    Combat combat1(hero, Companion, goblin);
+    Combat combat2(hero, Companion, goblin2);
+
+    switch (nextChapter) {
+    
+    default:
         std::cout << "Wszystkie rozdzia³y zosta³y ukoñczone! Gratulacje!\n";
+        return;
     }
+
+    GameState::saveGame(hero, act, filename);
+    continueGame();
 }
+
 void Game::continueGame() {
 	std::cout << "Naciœnij Enter, aby kontynuowaæ...";
 	std::cin.ignore();
@@ -55,19 +70,19 @@ void Game::continueGame() {
 	system("cls");
 }
 void Game::start() {
+    const std::string filename = "save.txt";
 	std::cout << "Galdurs Bate 4 \n";
 	Hero hero;
 	Sword sword("Sword", 20, 10, 10);
 	Bow bow("Longbow", 15, 5, 10);
 	MagicStick magicStick("Elder Wand", 25, 15, 10);
-
     hero.CreateHero(sword,bow,magicStick);
-	GameState::saveGame(hero, act, filename);
 	continueGame();
-	hero.levelUp();
+    hero.levelUp();
+	continueGame();
     GameState::saveGame(hero, act, filename);
-	continueGame();
-	Act prologue;
+    //rodzial 1 
+    Act prologue;
 	prologue.loadFromFile("Prolog.txt");
 	std::cout<<prologue.getChapterContent(1)<<std::endl;
     std::cout << "SYSTEM: Rzut na percepcje"<<std::endl;;
@@ -84,16 +99,19 @@ void Game::start() {
         std::cout << "Nie zauwa¿asz niczego szczególnego na kartce.\n";
     }
 	prologue.markChapterCompleted(1);
-    GameState::saveGame(hero, act, filename);
+    GameState::saveGame(hero, prologue, filename);
+    //Zapis rodzial 1
+    //rodzial 2
     std::cout << prologue.getChapterContent(2) << std::endl;;
     continueGame();
     prologue.markChapterCompleted(2);
-    GameState::saveGame(hero, act, filename);
+    GameState::saveGame(hero, prologue, filename);
+	//Zapis rodzial 2
+
 	std::cout << "SYSTEM: ZADANIE ZAKTUALIZOWANE - “DOSTAÑ SIÊ DO MIASTA”" << std::endl;
-    
-    Act act1;
-	act1.loadFromFile("Akt1.txt");
-	std::cout << act1.getChapterContent(1) << std::endl;
+ 
+   //Rodzia³ 3 
+	std::cout << prologue.getChapterContent(3) << std::endl;
     continueGame();
     std::cout << "SYSTEM: Rzut na percepcje" << std::endl;;
     if (hero.perceptionTest(15))
@@ -105,9 +123,12 @@ void Game::start() {
         std::cout << " Jesteœ zbyt poch³oniêty wêdrowaniem, by zauwa¿yæ cieñ skradaj¹cy siê miêdzy drzewami. Gdy rozlega siê pierwszy okrzyk, jesteœ ju¿ otoczo" << std::endl;
 
     }
-	act1.markChapterCompleted(1);
-	GameState::saveGame(hero, act1, filename);
-	std::cout << act1.getChapterContent(2) << std::endl;
+    
+	prologue.markChapterCompleted(3);
+	GameState::saveGame(hero, prologue, filename);
+    //Zapis rodzial 3 
+    //Rodzial 4 
+	std::cout << prologue.getChapterContent(4) << std::endl;
     continueGame();
 	Hero Companion("Bezimienny", 15, 0, 0,10,10,10,10,10,10);
 	Goblin goblin("Rzezimieszek Starszy", "Goblin", 5, 25 , 75);
@@ -116,13 +137,18 @@ void Game::start() {
 	combat1.StartBattleSolo();
 	Combat combat2(hero, Companion, goblin2);
 	combat2.StartBattleSolo();
-	act1.markChapterCompleted(2);
-	GameState::saveGame(hero, act1, filename);
+	prologue.markChapterCompleted(4);
+	GameState::saveGame(hero, prologue, filename);
+	//Zapis rodzial 4 
+	
 	hero.CheckIfLevelUp();
     continueGame();
-    std::cout << act1.getChapterContent(3) << std::endl;
+    
+    //Rodzial 5
+    std::cout << prologue.getChapterContent(5) << std::endl;
     continueGame();
-	act1.markChapterCompleted(3);
+   
+	prologue.markChapterCompleted(5);
 	std::cout << "SYSTEM: Rzut szczêscia" << std::endl;
 	if (hero.perceptionTest(2)) {
 		std::cout << "Grzyb okazuje siê jadalny, ale brakuje mu przypraw" << std::endl;
@@ -133,12 +159,7 @@ void Game::start() {
 		std::cout << "Otrzymujesz minus 5 punktow zdrowia" << std::endl;
 	}
 	std::cout << "SYSTEM : Czas na odpoczynek towje zdrowie oraz reszta statystyk regenruj sie" << std::endl;
-	//dodac odnawianie statystyk
-    // handlarz 
-    // wybranie co w rece 
-	// akt 2
-    //nie dziala wczytwanie gry
-
+	
 
     
 }

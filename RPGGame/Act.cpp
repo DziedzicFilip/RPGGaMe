@@ -42,10 +42,11 @@ bool Act::loadFromFile(const std::string& filename) {
 std::string Act::getChapterContent(int id) const {
     for (const auto& chapter : chapters) {
         if (chapter.id == id) {
-            return chapter.content;
+            return chapter.content ;
+
         }
     }
-    return "Rozdzial nie znaleziony.";
+    return "";
 }
 
 void Act::markChapterCompleted(int id) {
@@ -77,4 +78,15 @@ int Act::getFirstIncompleteChapter() const {
         }
     }
     return -1; // Wszystkie rozdzia³y ukoñczone
+}
+int Act::getLastCompletedChapter() const {
+    int lastCompletedId = -1;
+    for (const auto& chapter : chapters) {
+        int id = chapter.id;
+        auto it = chapterCompleted.find(id);
+        if (it != chapterCompleted.end() && it->second) {
+            lastCompletedId = id;
+        }
+    }
+    return lastCompletedId;
 }
