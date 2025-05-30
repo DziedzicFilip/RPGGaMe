@@ -25,11 +25,12 @@ void Hero::setHand(Weapon* weapon) {
     hand = weapon;
 }
 
-void Hero::heavyAttack(Enemy& enemy) {
+void Hero::heavyAttack(Enemy& enemy, Hero& hero) {
 	enemy.setHealthPoints(enemy.getHealthPoints() - (strength + dexterity + getHand()->getAttackDamage()));
+	hero.setEndurance(hero.getEndurance() - 3); 
 }
 
-void Hero::lightAttack(Enemy& enemy) {
+void Hero::lightAttack(Enemy& enemy, Hero& hero) {
     // Implementacja póŸniej
     enemy.setHealthPoints(enemy.getHealthPoints() - (strength + dexterity / 2));
 }
@@ -45,9 +46,10 @@ void Hero::reflect() {
 
 }
 
-void Hero::ignis(Enemy& enemy) {
+void Hero::ignis(Enemy& enemy, Hero& hero) {
     // Implementacja póŸniej
 	enemy.setHealthPoints(enemy.getHealthPoints() - (intelligence * 1.5 + dexterity / 2 + getHand()->getMagicPower()));
+	hero.setMana(hero.getMana() - 1); 
 }
 
 void Hero::heal(Hero& hero) {
@@ -55,13 +57,18 @@ void Hero::heal(Hero& hero) {
 	
 }
 
-void Hero::waterBomb(Enemy& enemy) {
+void Hero::waterBomb(Enemy& enemy, Hero& hero) {
     // Implementacja póŸniej
 	enemy.setHealthPoints(enemy.getHealthPoints() - (intelligence * 1.2 + dexterity / 3+ getHand()->getMagicPower()));
+	hero.setMana(hero.getMana() - 1);
 }
 
 bool Hero::perceptionTest(int event) const {
 	int random = std::rand() % 20 + 1; 
+	
+	std::cout << "Liczba wyrzucona : " << random  << " wymagane  "<<event << std::endl;
+	std::cout << "Szczescie : " << getLuck() << std::endl;
+	random = random + getLuck();
 	if (random < event) {
 		//std::cout << "Perception test failed." << std::endl;
 		return false;
@@ -185,6 +192,14 @@ void Hero:: levelUp() {
 
 
 	}
+	setFullHp(getHealthPoints());
+	setFullMana(getMana());
+	setFullStrength(getStrength());
+	setFullIntelligence(getIntelligence());
+	setFullDexterity(getDexterity());
+	setFullLuck(getLuck());
+	setFullEndurance(getEndurance());
+
 
 
 }

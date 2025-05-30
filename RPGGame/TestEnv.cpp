@@ -28,18 +28,30 @@ int main() {
 
 	PrintText(welcome);
     Game* game;
-    const std::string saveFile = "save.txt";
+   const std::string saveFile = "save.txt";
 
-    if (GameState::hasSaveFile(saveFile)) {
+  if (GameState::hasSaveFile(saveFile)) {
 
 		GameState::shouldLoadGame(saveFile);
-        Game game(saveFile);
-        game.continueLoadedGame();
+       Game game(saveFile);
+       game.continueLoadedGame();
+   }
+   else {
+      std::cout << "Nie znaleziono zapisu gry. Rozpoczynam now¹ grê.\n";
+       Game game;  // sam odpali start()
     }
-    else {
-        std::cout << "Nie znaleziono zapisu gry. Rozpoczynam now¹ grê.\n";
-        Game game;  // sam odpali start()
-    }
+
+   /* Hero hero;
+    Sword sword("Excalibur", 20, 10, 10);
+    Bow bow("Longbow", 15, 5, 10);
+    MagicStick magicStick("Elder Wand", 25, 15, 10);
+    hero.CreateHero(sword,bow,magicStick);
+	for (int i = 0; i < 5; i++)
+	{
+        hero.perceptionTest(10);
+	}*/
+
+	
 
     
 

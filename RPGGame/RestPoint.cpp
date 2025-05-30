@@ -12,17 +12,17 @@ const std::string& RestPoint::getName() const {
 }
 
 void RestPoint::restoreEndurance(Character& hero, int value) const {
-    hero.setEndurance(hero.getEndurance() + value);
+    hero.setEndurance(value);
     std::cout << hero.getName() << " odzyskuje " << value << " punktów wytrzyma³oœci w punkcie odpoczynku: " << name << std::endl;
 }
 
 void RestPoint::restoreHP(Character& hero, double value) const {
-    hero.setHealthPoints(hero.getHealthPoints() + value);
+    hero.setHealthPoints( value);
     std::cout << hero.getName() << " odzyskuje " << value << " HP w punkcie odpoczynku: " << name << std::endl;
 }
 
 void RestPoint::restoreMana(Character& hero, double value) const {
-    hero.setMana(hero.getMana() + value);
+    hero.setMana( value);
     std::cout << hero.getName() << " odzyskuje " << value << " many w punkcie odpoczynku: " << name << std::endl;
 }
 

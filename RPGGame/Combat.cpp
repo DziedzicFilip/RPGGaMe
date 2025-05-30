@@ -26,16 +26,16 @@ void Combat::chooseAction(Hero& hero, Enemy& enemy) {
     switch (choice)
     {
 	case 1 :  
-		hero.heavyAttack(enemy);
+		hero.heavyAttack(enemy,hero);
 		break;  
 	case 2:
-		hero.lightAttack(enemy);
+		hero.lightAttack(enemy,hero);
 		break;
 	case 3:
-		hero.ignis(enemy);
+		hero.ignis(enemy,hero);
 		break;
 	case 4:
-		hero.waterBomb(enemy);
+		hero.waterBomb(enemy,hero);
 		break;
 	case 5:
 		hero.heal(hero);
@@ -113,16 +113,16 @@ void Combat::CompaionionTurn(Hero& CompanionHero, Enemy& enemy)
 	switch (randomAction)
 	{
 	case 1:
-		CompanionHero.heavyAttack(enemy);
+		CompanionHero.heavyAttack(enemy, CompanionHero);
 		break;
 	case 2:
-		CompanionHero.lightAttack(enemy);
+		CompanionHero.lightAttack(enemy, CompanionHero);
 		break;
 	case 3:
-		CompanionHero.ignis(enemy);
+		CompanionHero.ignis(enemy, CompanionHero);
 		break;
 	case 4:
-		CompanionHero.waterBomb(enemy);
+		CompanionHero.waterBomb(enemy, CompanionHero);
 		break;
 	case 5:
 		CompanionHero.heal(CompanionHero);
@@ -141,11 +141,10 @@ void Combat::StartBattle() {
 			std::cout << "Wygra³eœ walkê!\n";
 			mainHero.setXP(mainHero.getXP() + enemy.getXP());
 			std::cout << "Zdobywasz " << enemy.getXP() << " punktów doœwiadczenia!\n";
-			if (random > 15)
-			{
-				std::cout << enemy.getName()+ "mial 1 golda!\n";
-				mainHero.getEquipment().setGold(mainHero.getEquipment().getGold() + 1);
-			}
+			
+				std::cout << enemy.getName()+ "mial 5 golda!\n";
+				mainHero.getEquipment().setGold(mainHero.getEquipment().getGold() + 5);
+			
 			break;
 		}
 		enemyTurn(enemy, mainHero);
@@ -183,11 +182,8 @@ void Combat::StartBattleSolo()
 			std::cout << "Wygra³eœ walkê!\n";
 			mainHero.setXP(mainHero.getXP() + enemy.getXP());
 			std::cout << "Zdobywasz " << enemy.getXP() << " punktów doœwiadczenia!\n";
-			if (random > 15)
-			{
-				std::cout << enemy.getName() + "mial 1 golda!\n";
-				mainHero.getEquipment().setGold(mainHero.getEquipment().getGold() + 1);
-			}
+			std::cout << enemy.getName() + "mial 5 golda!\n";
+			mainHero.getEquipment().setGold(mainHero.getEquipment().getGold() + 5);
 			break;
 		}
 		enemyTurn(enemy, mainHero);

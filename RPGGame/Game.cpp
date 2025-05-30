@@ -7,6 +7,10 @@
 #include <cstdlib>
 #include "Combat.h"
 #include "Goblin.h" 
+#include "RestPoint.h"
+#include "NPC.h"
+#include "Potion.h"
+#include "Trade.h"
 Game::Game() {
 	start(); 
 }
@@ -158,8 +162,62 @@ void Game::start() {
 		hero.setHealthPoints(hero.getHealthPoints() - 5);
 		std::cout << "Otrzymujesz minus 5 punktow zdrowia" << std::endl;
 	}
-	std::cout << "SYSTEM : Czas na odpoczynek towje zdrowie oraz reszta statystyk regenruj sie" << std::endl;
-	
+	std::cout << "SYSTEM : Czas na odpoczynek towje zdrowie oraz reszta statystyk regenruja  sie" << std::endl;
+	RestPoint restPoint("Odpoczynek w lesie");
+	restPoint.restoreEndurance(hero,hero.getFullEndurance());
+	restPoint.restoreHP(hero,hero.getFullHp());
+	restPoint.restoreMana(hero, hero.getFullMana());
+	GameState::saveGame(hero, prologue, filename);
 
-    
-}
+	//Zapis rodzial 5
+	prologue.getChapterContent(6);
+	Equipment plecakSklepikarza;
+	plecakSklepikarza.addWeapon(new Sword("zmatowia³y medalion", 0, 0, 1));
+	plecakSklepikarza.addWeapon(new Bow("Zardzewia³y ³uk", 15, 1, 5));
+	plecakSklepikarza.addPotion(new Potion(Potion::Type::Health, 20,8));
+	NPC kruk("Kruk", plecakSklepikarza );
+    Trade trade;
+	trade.StartTrade(kruk, hero);
+    if (hero.getEquipment().getWeapon(0)->getName() == "zmatowia³y medalion" || hero.getEquipment().getWeapon(1)->getName() == "zmatowia³y medalion")
+    {
+        std::cout << "Gdy tylko przedmiot znajdzie siê w Twojej d³oni, œwiat siê przechyla. Przez sekundê jesteœ gdzieœ indziej. Krew na d³oniach, czyjœ krzyk. Obraz zbroi, w któr¹ wgniatasz ostrze. Czu³e s³owo, szept: “Bracie…”" << std::endl;
+    }
+	prologue.markChapterCompleted(6);
+	GameState::saveGame(hero, prologue, filename);
+	prologue.getChapterContent(7);
+	/*std::cout << "SYSTEM: Wybierz co chcesz zrobiæ" << std::endl;
+	std::cout << "1. Wybierz broñ" << std::endl;
+	std::cout << "2. Wyswietl ekwipunek" << std::endl;
+	std::cout << "3. Nic nie rob" << std::endl;
+	int choice;
+	bool exit = true;
+    while (exit) {
+        std::cout << "SYSTEM: Wybierz co chcesz zrobiæ" << std::endl;
+        std::cout << "1. Wybierz broñ" << std::endl;
+        std::cout << "2. Wyswietl ekwipunek" << std::endl;
+        std::cout << "3. Nic nie rob" << std::endl;
+        std::cin >> choice;
+        switch (choice) {
+        case 1: {
+            restPoint.chooseEquipment(hero);
+            break;
+        }
+        case 2: {
+            hero.getEquipment().displayWeapons();
+            break;
+        case 3: {
+            std::cout << "Nic nie robisz, odpoczywasz w lesie." << std::endl;
+            exit = false;
+            break;
+        default:
+            std::cout << "Nieprawid³owy wybór!" << std::endl;
+            break;
+        }
+        }
+
+
+
+
+
+        }*/
+    }
