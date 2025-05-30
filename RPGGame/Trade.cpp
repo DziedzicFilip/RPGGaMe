@@ -7,6 +7,8 @@ void Trade::StartTrade(NPC& npc, Hero& hero) {
 	bool tradeActive = true;
 	while (tradeActive)
 	{
+		std::cout<<"Zawartosc twojej sakwy"<<hero.getEquipment().getGold()<<std::endl;
+
 		std::cout << "Trade with " << npc.getName() << " started." << std::endl;
 		std::cout << "1. Buy Weapon" << std::endl;
 		std::cout << "2. Sell Weapon" << std::endl;

@@ -13,16 +13,16 @@ const std::string& RestPoint::getName() const {
 
 void RestPoint::restoreEndurance(Character& hero, int value) const {
     hero.setEndurance(value);
-    std::cout << hero.getName() << " odzyskuje " << value << " punktów wytrzyma³oœci w punkcie odpoczynku: " << name << std::endl;
+    std::cout << hero.getName() << " odzyskuje " << value << " punktow wytrzymalosci w punkcie odpoczynku: " << name << std::endl;
 }
 
 void RestPoint::restoreHP(Character& hero, double value) const {
-    hero.setHealthPoints( value);
+    hero.setHealthPoints(value);
     std::cout << hero.getName() << " odzyskuje " << value << " HP w punkcie odpoczynku: " << name << std::endl;
 }
 
 void RestPoint::restoreMana(Character& hero, double value) const {
-    hero.setMana( value);
+    hero.setMana(value);
     std::cout << hero.getName() << " odzyskuje " << value << " many w punkcie odpoczynku: " << name << std::endl;
 }
 
@@ -33,23 +33,21 @@ void RestPoint::dialogue(Character& hero1, Character& hero2, const std::string& 
 
 void RestPoint::chooseEquipment(Character& hero) const {
     Equipment& eq = hero.getEquipment();
-    eq.displayWeapons(); // Wyœwietl dostêpne bronie
+    eq.displayWeapons(); // Wyswietl dostepne bronie
 
-    std::cout << "Wybierz numer broni, któr¹ chcesz za³o¿yæ: ";
+    std::cout << "Wybierz numer broni, ktora chcesz zalozyc: ";
     int index;
     std::cin >> index;
 
-    // Zak³adamy, ¿e Character/Hero ma setHand(Weapon*) i Equipment ma showWeaponDetails(int)
-    Weapon* selected = eq.getWeapon(index); // Dodaj getWeapon(int) jeœli nie istnieje
+    Weapon* selected = eq.getWeapon(index);
     if (selected) {
-        // Jeœli to Hero:
         Hero* h = dynamic_cast<Hero*>(&hero);
         if (h) {
             h->setHand(selected);
-            std::cout << "Za³o¿ono broñ: " << selected->getName() << std::endl;
+            std::cout << "Zalozono bron: " << selected->getName() << std::endl;
         }
     }
     else {
-        std::cout << "Nieprawid³owy wybór!" << std::endl;
+        std::cout << "Nieprawidlowy wybor!" << std::endl;
     }
 }
